@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-cream text-ink font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  h1, h2, h3 {
+    @apply text-ink;
+    line-height: 1.35;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+  .card {
+    @apply rounded-2xl bg-white shadow-soft ring-1 ring-brand-100;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-200 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-brand-700 text-white hover:bg-brand-800;
+  }
+  .btn-soft {
+    @apply btn bg-brand-50 text-brand-800 hover:bg-brand-100;
+  }
+  .btn-ghost {
+    @apply btn text-ink-soft hover:bg-brand-50;
+  }
+  .input {
+    @apply w-full rounded-xl border border-brand-100 bg-white px-4 py-2.5 text-ink placeholder:text-ink-mute focus:border-brand-400 focus:outline-none focus:ring-4 focus:ring-brand-100;
+  }
+  .label {
+    @apply mb-1 block text-sm font-medium text-ink-soft;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-800;
+  }
+  .prose-legal p {
+    @apply mb-3;
+  }
+  .prose-legal h3 {
+    @apply mb-2 mt-6 text-lg font-semibold;
+  }
+}
+
+/* หน้าพิมพ์แบบฟอร์ม: ซ่อนทุกอย่าง ยกเว้นเอกสาร */
+@media print {
+  @page {
+    size: A4;
+    margin: 18mm 16mm;
+  }
+  body {
+    background: white !important;
+  }
+  .no-print,
+  header,
+  footer,
+  nav {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-doc {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+}
+.print-only {
+  display: none;
+}
