@@ -16,7 +16,7 @@ import {
 import SearchBox from "@/components/SearchBox";
 import BannerCarousel from "@/components/BannerCarousel";
 import IconCircle from "@/components/IconCircle";
-import Greeting from "@/components/home/Greeting";
+import { Orb, Arch, Blob } from "@/components/Decor";
 import Workspace from "@/components/home/Workspace";
 import KnowledgeSwitcher from "@/components/home/KnowledgeSwitcher";
 import { CardHead } from "@/components/ui";
@@ -38,13 +38,29 @@ export default function Home() {
   const hotlines = CONTACTS.filter((c) => c.sector === "ministry");
 
   return (
-    <div className="container-page pt-2">
-      {/* ───────── ส่วนบน ───────── */}
-      <section className="grid items-center gap-5 lg:grid-cols-[1fr_1.4fr]">
-        <Greeting />
-        <SearchBox big />
+    <>
+      {/* ───────── หัวเว็บ (Hero) ───────── */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-tint to-page">
+        <Blob id="hero-blob" className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 opacity-60" />
+        <Orb id="hero-orb" size={240} className="pointer-events-none absolute -right-12 top-4 hidden opacity-70 md:block" />
+        <Arch id="hero-arch" size={110} className="pointer-events-none absolute bottom-0 right-[30%] hidden opacity-60 md:block" />
+        <div className="container-page relative py-14 sm:py-20">
+          <span className="chip">สำหรับนักเรียน นักศึกษาทำงานพิเศษ ลูกจ้างรายวัน และคนเริ่มทำงาน</span>
+          <h1 className="mt-4 max-w-2xl text-4xl font-bold leading-tight sm:text-6xl">
+            รู้สิทธิ เตรียมหลักฐาน
+            <br />
+            <span className="bg-gradient-to-r from-brand-700 to-brand-500 bg-clip-text text-transparent">ไม่ต้องสู้คนเดียว</span>
+          </h1>
+          <p className="mt-4 max-w-xl text-lg text-ink-soft">
+            อธิบายกฎหมายแรงงานด้วยภาษาง่าย ๆ และพาเตรียมตัวทีละขั้นจนพร้อมติดต่อหน่วยงาน ใช้ได้โดยไม่ต้องเปิดเผยตัวตน
+          </p>
+          <div className="mt-7 max-w-2xl">
+            <SearchBox big />
+          </div>
+        </div>
       </section>
 
+    <div className="container-page">
       <section className="mt-6">
         <BannerCarousel />
       </section>
@@ -134,5 +150,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </>
   );
 }
