@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, BookOpen, Route, MessagesSquare, MessageCircle } from "lucide-react";
 
-/** แถบเมนูล่างสำหรับมือถือ พร้อมปุ่มแชทตรงกลาง */
 const LEFT = [
   { href: "/", label: "Home", icon: Home },
   { href: "/knowledge", label: "Learn", icon: BookOpen },

@@ -39,57 +39,50 @@ export default function Home() {
 
   return (
     <>
-      {/* ───────── หัวเว็บ (Hero) ───────── */}
       <section className="relative overflow-hidden bg-gradient-to-b from-tint to-page">
         <Blob id="hero-blob" className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 opacity-60" />
         <Orb id="hero-orb" size={240} className="pointer-events-none absolute -right-12 top-4 hidden opacity-70 md:block" />
         <Arch id="hero-arch" size={110} className="pointer-events-none absolute bottom-0 right-[30%] hidden opacity-60 md:block" />
-        <div className="container-page relative py-14 sm:py-20">
-          <span className="chip">สำหรับนักเรียน นักศึกษาทำงานพิเศษ ลูกจ้างรายวัน และคนเริ่มทำงาน</span>
+        <div className="container-page relative mt-8 sm:mt-16">
           <h1 className="mt-4 max-w-2xl text-4xl font-bold leading-tight sm:text-6xl">
             รู้สิทธิ เตรียมหลักฐาน
             <br />
             <span className="bg-gradient-to-r from-brand-700 to-brand-500 bg-clip-text text-transparent">ไม่ต้องสู้คนเดียว</span>
           </h1>
-          <p className="mt-4 max-w-xl text-lg text-ink-soft">
-            อธิบายกฎหมายแรงงานด้วยภาษาง่าย ๆ และพาเตรียมตัวทีละขั้นจนพร้อมติดต่อหน่วยงาน ใช้ได้โดยไม่ต้องเปิดเผยตัวตน
-          </p>
-          <div className="mt-7 max-w-2xl">
+          <p className="mt-4 max-w-xl sm:text-lg text-ink-soft">
+            Understand your rights at work in plain language, then prepare step by step until you’re ready to contact the right agency — anonymously.</p>
+          <div className="mt-2 sm:mt-6 max-w-2xl">
             <SearchBox big />
           </div>
         </div>
       </section>
 
     <div className="container-page">
-      <section className="mt-6">
+      <section className="mt-4 sm:mt-8">
         <BannerCarousel />
       </section>
 
-      {/* ───────── Dashboard ───────── */}
       <div className="mt-6 grid gap-6 lg:grid-cols-12">
         <div className="space-y-6 lg:col-span-7">
           <Workspace />
 
-          {/* ปัญหาที่พบบ่อย */}
-          <section className="card p-5 sm:p-6" aria-labelledby="pb-title">
-            <CardHead
-              title="Common problems"
-              action={
-                <Link href="/problems" className="text-sm font-semibold text-brand-800 hover:underline">
-                  View all {PROBLEMS.length}
-                </Link>
-              }
-            />
-            <ul className="mt-4 space-y-2.5">
+          <section className="card-tint p-5 sm:p-6" aria-labelledby="pb-title">
+            <div className="flex items-center justify-between gap-3">
+              <h2 id="pb-title" className="text-lg font-bold">Common problems</h2>
+              <Link href="/problems" className="text-sm font-semibold text-brand-800 hover:underline">
+                View all
+              </Link>
+            </div>
+            <ul className="mt-4 space-y-2">
               {problems.map((p) => (
                 <li key={p.id}>
-                  <Link href={`/problems/${p.id}`} className="group flex items-center gap-4 rounded-2xl bg-page px-4 py-3 transition hover:bg-tint">
-                    <IconCircle icon={GROUP_ICON[p.group] || Wallet} tone="white" />
+                  <Link href={`/problems/${p.id}`} className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 transition hover:shadow-soft">
+                    <IconCircle icon={GROUP_ICON[p.group] || Wallet} tone="tint" size="sm" />
                     <span className="min-w-0 flex-1">
-                      <span className="block font-medium leading-snug">{p.title}</span>
+                      <span className="block truncate text-sm font-medium">{p.title}</span>
                       <span className="block text-xs text-ink-soft">{p.group}</span>
                     </span>
-                    <ChevronRight className="h-5 w-5 shrink-0 text-ink-mute transition group-hover:translate-x-0.5 group-hover:text-brand-700" />
+                    <ChevronRight className="h-4 w-4 shrink-0 text-ink-mute" />
                   </Link>
                 </li>
               ))}
@@ -99,38 +92,44 @@ export default function Home() {
 
         <div className="space-y-6 lg:col-span-5">
           <KnowledgeSwitcher />
-
-          {/* สายด่วน */}
-          <section className="card p-5 sm:p-6" aria-labelledby="hl-title">
-            <CardHead
-              title="Hotlines"
-              action={
+            <section className="card-petal p-5 sm:p-6" aria-labelledby="hl-title">
+              <div className="flex items-center justify-between gap-3">
+                <h2 id="hl-title" className="text-lg font-bold">Hotlines</h2>
                 <Link href="/contacts" className="text-sm font-semibold text-brand-800 hover:underline">
                   All contacts
                 </Link>
-              }
-            />
-            <ul className="mt-4 space-y-2.5">
-              {hotlines.map((c) => {
-                const main = c.id === "dlpw" && c.line ? `LINE ${c.line}` : c.phone || c.line || "";
-                return (
-                  <li key={c.id} className="flex items-center gap-3 rounded-2xl bg-page px-4 py-3">
-                    <IconCircle icon={Phone} tone="tint" size="sm" />
-                    <span className="min-w-0 flex-1 text-sm font-medium leading-snug">{c.name}</span>
-                    {c.phone && c.id !== "dlpw" ? (
-                      <a href={`tel:${c.phone}`} className="shrink-0 rounded-full bg-white px-3 py-1.5 text-base font-bold tabular-nums text-brand-800 shadow-soft hover:bg-brand-50">
-                        {main}
-                      </a>
-                    ) : (
-                      <span className="shrink-0 text-sm font-bold text-brand-800">{main}</span>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
+              </div>
+              <ul className="mt-4 grid grid-cols-3 gap-3">
+                {hotlines.map((c) => {
+                  const isLine = c.id === "dlpw" && !!c.line;
+                  const value = isLine ? `@${c.line!.replace(/^@/, "")}` : c.phone || c.line || "–";
+                  const label = isLine ? "LINE กรมสวัสดิการฯ" : c.name;
+                  const inner = (
+                    <>
+                      <IconCircle icon={isLine ? MessageCircle : Phone} tone="tint" size="sm" />
+                      <span>
+                        <span className={`block font-bold tabular-nums ${isLine ? "text-sm sm:text-base" : "text-xl"}`}>{value}</span>
+                        <span className="block text-[11px] leading-tight text-ink-soft sm:text-xs">{label}</span>
+                      </span>
+                    </>
+                  );
+                  return (
+                    <li key={c.id}>
+                      {c.phone && !isLine ? (
+                        <a href={`tel:${c.phone}`} className="flex h-full flex-col gap-3 rounded-2xl bg-white/80 p-3.5 transition hover:bg-white sm:p-4">
+                          {inner}
+                        </a>
+                      ) : (
+                        <Link href="/contacts" className="flex h-full flex-col gap-3 rounded-2xl bg-white/80 p-3.5 transition hover:bg-white sm:p-4">
+                          {inner}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
 
-          {/* ถาม */}
           <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-800 to-brand-700 p-6 text-white shadow-pop" aria-labelledby="ask-title">
             <span aria-hidden="true" className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full bg-white/10" />
             <span aria-hidden="true" className="pointer-events-none absolute -bottom-20 right-16 h-40 w-40 rounded-full bg-white/10" />

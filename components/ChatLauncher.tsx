@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MessageCircle } from "lucide-react";
 
-/** ปุ่มแชทลอยสำหรับจอใหญ่ (มือถือใช้ปุ่มกลางใน BottomNav แทน) */
 export default function ChatLauncher() {
   const pathname = usePathname();
   if (pathname.startsWith("/chat") || pathname.startsWith("/forms") || pathname.startsWith("/admin")) return null;

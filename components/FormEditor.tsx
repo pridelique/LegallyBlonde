@@ -28,7 +28,6 @@ export default function FormEditor({ type }: { type: FormType }) {
   const [loaded, setLoaded] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  // โหลด draft หรือเติมข้อมูลล่วงหน้าจาก Roadmap
   useEffect(() => {
     const draft = readLS<Draft | null>(key, null);
     if (draft) {
@@ -105,7 +104,6 @@ export default function FormEditor({ type }: { type: FormType }) {
       </div>
 
       <div className="container-page mt-6 grid gap-6 lg:grid-cols-2">
-        {/* Editor */}
         <section className="no-print space-y-5">
           <div className="flex flex-wrap items-center gap-2">
             {problem && (
@@ -165,7 +163,6 @@ export default function FormEditor({ type }: { type: FormType }) {
           </div>
         </section>
 
-        {/* Preview (ส่วนนี้ส่วนเดียวที่ถูกพิมพ์) */}
         <section className="lg:sticky lg:top-20 lg:self-start">
           <p className="no-print mb-2 text-sm font-semibold text-ink-soft">ตัวอย่างเอกสาร</p>
           <div className="print-doc card bg-white p-8 font-doc text-[15px] leading-relaxed text-black">

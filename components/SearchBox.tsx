@@ -33,7 +33,7 @@ export default function SearchBox({ big = false }: { big?: boolean }) {
             id={id}
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search… เช่น เจ้านายไม่จ่ายเงิน"
+            placeholder="Search…"
             className="min-w-0 flex-1 bg-transparent py-2 text-base placeholder:text-ink-mute focus:outline-none"
           />
           <button className="btn-primary shrink-0 !min-h-[40px] !px-5">Search</button>

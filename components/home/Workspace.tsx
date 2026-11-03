@@ -6,13 +6,11 @@ import { Route, FolderCheck, CalendarClock, ArrowRight, Plus } from "lucide-reac
 import { useStored, formatDate } from "@/lib/store";
 import { ROADMAP_KEY, type RoadmapProgress } from "@/lib/repos";
 import { getProblem } from "@/lib/data/problems";
-import { ProgressRing, StepBars } from "../smart";
 import IconCircle from "../IconCircle";
 import { TodayLabel } from "./Greeting";
 
 const STEP_LABELS = ["Check", "Status", "Evidence", "Contact"];
 
-/** สรุปจาก Roadmap ที่เก็บไว้ในเครื่อง: จำนวนที่ทำอยู่ หลักฐานที่พร้อม เส้นตายถัดไป */
 export default function Workspace() {
   const [all, , ready] = useStored<Record<string, RoadmapProgress>>(ROADMAP_KEY, {});
 
@@ -38,11 +36,11 @@ export default function Workspace() {
 
   const cur = data.current;
   const curProblem = cur ? getProblem(cur.problemId) : undefined;
-  const pct = cur ? Math.min(cur.step - 1, 4) * 25 + (cur.step === 3 && curProblem ? (cur.evidence.length / curProblem.evidence.length) * 25 : 0) : 0;
+  const doneSteps = cur ? Math.min(cur.step - 1, 4) : 0;
+  const pct = doneSteps * 25;
 
   return (
     <div className="grid gap-4">
-      {/* สรุปวันนี้ */}
       <section className="card-petal p-5 sm:p-6" aria-labelledby="ws-title">
         <div className="flex items-center justify-between gap-3">
           <h2 id="ws-title" className="text-lg font-bold">
@@ -65,10 +63,8 @@ export default function Workspace() {
         </div>
       </section>
 
-      {/* ทำต่อ */}
-      <section className="card relative overflow-hidden p-5 sm:p-6" aria-labelledby="cont-title">
-        <span aria-hidden="true" className="pointer-events-none absolute -bottom-24 -left-10 h-48 w-[120%] rounded-[100%] bg-tint" />
-        <div className="relative flex items-center gap-5">
+      <section className="card p-5 sm:p-6" aria-labelledby="cont-title">
+        <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0 flex-1">
             <p className="eyebrow">{cur ? "Continue" : "Get started"}</p>
             <h2 id="cont-title" className="mt-1 text-xl font-bold leading-snug">
@@ -77,25 +73,37 @@ export default function Workspace() {
             <p className="mt-1 text-sm text-ink-soft">
               {cur ? `Step ${Math.min(cur.step, 4)} of 4 · ${STEP_LABELS[Math.min(cur.step, 4) - 1]}` : "เลือกปัญหาที่เจอ แล้วระบบจะพาทำทีละขั้น"}
             </p>
-            <Link href={cur ? `/roadmap/${cur.problemId}` : "/problems"} className="btn-primary mt-4">
-              {cur ? (
-                <>
-                  Continue <ArrowRight className="h-4 w-4" />
-                </>
-              ) : (
-                <>
-                  <Plus className="h-4 w-4" /> Start a roadmap
-                </>
-              )}
-            </Link>
           </div>
-          <ProgressRing value={pct} size={128} id="home-ring" sub={cur ? "complete" : "no roadmap"} />
+          <Link href={cur ? `/roadmap/${cur.problemId}` : "/problems"} className="btn-primary shrink-0">
+            {cur ? (
+              <>
+                Continue <ArrowRight className="h-4 w-4" />
+              </>
+            ) : (
+              <>
+                <Plus className="h-4 w-4" /> Start a roadmap
+              </>
+            )}
+          </Link>
         </div>
-        {cur && (
-          <div className="relative mt-6">
-            <StepBars step={Math.min(cur.step, 4)} labels={STEP_LABELS} />
+
+        <div className="mt-5 rounded-2xl border border-tint bg-tint p-5">
+          <div className="flex items-center justify-between gap-3">
+            <span className="font-semibold">ความคืบหน้าโดยรวม</span>
+            <span className="font-bold text-brand-700">{pct}%</span>
           </div>
-        )}
+          <div
+            className="mt-3 h-3 overflow-hidden rounded-full bg-petal"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={pct}
+            aria-label="ความคืบหน้าโดยรวม"
+          >
+            <div className="h-full rounded-full bg-gradient-to-r from-brand-500 to-brand-700 transition-all duration-500" style={{ width: `${pct}%` }} />
+          </div>
+          <p className="mt-3 text-center text-sm text-ink-soft">{doneSteps} of 4 ขั้นที่เสร็จสิ้น</p>
+        </div>
       </section>
     </div>
   );

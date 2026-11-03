@@ -24,6 +24,7 @@ import { newProgress, ROADMAP_KEY, type RoadmapProgress } from "@/lib/repos";
 import { useAuth } from "@/lib/auth";
 import { PageHeader, Notice, LEGAL_REVIEW_NOTE } from "./ui";
 import ContactCard from "./ContactCard";
+import StepTrack from "./Steptrack";
 import { FORM_LABEL } from "@/lib/forms";
 
 const STEPS = [
@@ -39,7 +40,6 @@ export default function RoadmapRunner({ problemId }: { problemId: string }) {
   const [all, setAll, ready] = useStored<Record<string, RoadmapProgress>>(ROADMAP_KEY, {});
   const prog = all[problemId];
 
-  // template loading: สร้าง progress ใหม่จาก template ของปัญหานี้
   useEffect(() => {
     if (ready && !prog) setAll((prev) => ({ ...prev, [problemId]: newProgress(problemId) }));
   }, [ready, prog, problemId, setAll]);
@@ -83,37 +83,7 @@ export default function RoadmapRunner({ problemId }: { problemId: string }) {
           </div>
         )}
 
-        {/* Roadmap partition / stepper */}
-        <ol className="grid grid-cols-4 gap-2">
-          {STEPS.map((s) => {
-            const done = step > s.n;
-            const current = step === s.n;
-            return (
-              <li key={s.n}>
-                <button
-                  onClick={() => go(s.n)}
-                  className={`flex w-full flex-col items-center gap-1 rounded-2xl px-1 py-3 text-center text-xs transition sm:flex-row sm:justify-center sm:gap-2 sm:text-sm ${
-                    current
-                      ? "bg-brand-700 text-white shadow-soft"
-                      : done
-                        ? "bg-green-50 text-ok ring-1 ring-green-200"
-                        : "bg-white text-ink-soft shadow-soft"
-                  }`}
-                  aria-current={current ? "step" : undefined}
-                >
-                  {done ? <Check className="h-4 w-4" /> : <s.icon className="h-4 w-4" />}
-                  <span>
-                    <span className="hidden sm:inline">Step {s.n} · </span>
-                    {s.title}
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ol>
-        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-brand-100">
-          <div className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-700 transition-all" style={{ width: `${Math.min(step - 1, 4) * 25}%` }} />
-        </div>
+        <StepTrack steps={STEPS} current={step} onSelect={go} />
 
         <div className="mt-6">
           {step === 1 && <Step1 prog={prog} p={p} onToggle={(i) => update({ symptoms: toggle(prog.symptoms, i) })} next={() => go(2)} />}
@@ -199,7 +169,6 @@ function CheckRow({ checked, onClick, children, sub }: { checked: boolean; onCli
   );
 }
 
-/* ───── Step 1: ประเมินเบื้องต้น ───── */
 function Step1({ prog, p, onToggle, next }: { prog: RoadmapProgress; p: P; onToggle: (i: number) => void; next: () => void }) {
   const n = prog.symptoms.length;
   return (
@@ -227,7 +196,6 @@ function Step1({ prog, p, onToggle, next }: { prog: RoadmapProgress; p: P; onTog
   );
 }
 
-/* ───── Step 2: สถานะ + อายุความ ───── */
 function Choice<T extends string>({ value, options, onChange }: { value?: T; options: { v: T; label: string }[]; onChange: (v: T) => void }) {
   return (
     <div className="flex flex-wrap gap-2">
@@ -346,7 +314,6 @@ function Step2({ prog, p, update, back, next }: { prog: RoadmapProgress; p: P; u
   );
 }
 
-/* ───── Step 3: หลักฐาน + แบบฟอร์ม ───── */
 function Step3({ prog, p, onToggle, back, next }: { prog: RoadmapProgress; p: P; onToggle: (i: number) => void; back: () => void; next: () => void }) {
   const requiredIdx = p.evidence.map((e, i) => (e.required ? i : -1)).filter((i) => i >= 0);
   const requiredDone = requiredIdx.filter((i) => prog.evidence.includes(i)).length;
@@ -397,7 +364,6 @@ function Step3({ prog, p, onToggle, back, next }: { prog: RoadmapProgress; p: P;
   );
 }
 
-/* ───── Step 4: หน่วยงาน ───── */
 function Step4({ prog, p, onContact, back, complete }: { prog: RoadmapProgress; p: P; onContact: (id: string) => void; back: () => void; complete: () => void }) {
   return (
     <section className="card p-6">
@@ -430,7 +396,6 @@ function Step4({ prog, p, onContact, back, complete }: { prog: RoadmapProgress; 
   );
 }
 
-/* ───── Completed ───── */
 function Completed({ prog, p, reopen, restart }: { prog: RoadmapProgress; p: P; reopen: () => void; restart: () => void }) {
   return (
     <section className="card overflow-hidden">
