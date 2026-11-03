@@ -27,7 +27,7 @@ export default function ProblemsPage() {
     <>
       <PageHeader
         title="Find your problem"
-        subtitle="เล่าปัญหาด้วยคำของคุณเอง ระบบจะเรียงเรื่องที่เกี่ยวข้องที่สุดให้ ถ้าไม่เจอตรง ๆ จะหาเรื่องที่ใกล้เคียงให้แทน"
+        subtitle="Tell us about your problem, we will find the solution for you."
         crumbs={[{ href: "/problems", label: "Problems" }]}
       >
         <label className="relative block max-w-xl">
@@ -35,7 +35,7 @@ export default function ProblemsPage() {
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="เช่น ร้านให้ออกพรุ่งนี้ไม่ต้องมา"
+            placeholder="Search..."
             className="input !rounded-full !pl-10"
             autoFocus
           />

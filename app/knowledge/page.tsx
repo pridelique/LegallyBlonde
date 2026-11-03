@@ -36,7 +36,7 @@ function KnowledgeInner() {
     <>
       <PageHeader
         title="Knowledge Base"
-        subtitle="เลือกประเภทแรงงานก่อน แล้วเลือกเรื่องที่อยากรู้ ทุกหัวข้อมีสรุปสั้น คำอธิบายแบบละเอียด และแหล่งอ้างอิง"
+        subtitle="Everything you need to know about your rights at work — all in one place, in plain words."
         crumbs={[{ href: "/knowledge", label: "Knowledge" }]}
       />
       <div className="container-page mt-6">

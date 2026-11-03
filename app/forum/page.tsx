@@ -26,7 +26,7 @@ export default function ForumPage() {
     <>
       <PageHeader
         title="Community Forum"
-        subtitle="ถามได้โดยไม่ต้องเปิดเผยตัวตน ผู้ตอบเป็นผู้ใช้ที่ยืนยันตัวตนแล้ว เช่น ทนายความ นักศึกษานิติศาสตร์ และเจ้าหน้าที่องค์กรพาร์ทเนอร์ ได้ความเห็นหลายมุมมอง"
+        subtitle="Your question, your privacy. Real answers from people who know labor law."
         crumbs={[{ href: "/forum", label: "Forum" }]}
       >
         <div className="flex flex-wrap gap-2">

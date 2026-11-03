@@ -86,8 +86,8 @@ export default function ChatPage() {
         <div className="flex items-center gap-3 border-b border-brand-100 bg-gradient-to-r from-brand-50 to-white px-5 py-3">
           <LogoMark id="chat-avatar" size={40} />
           <div className="flex-1">
-            <p className="font-semibold">Blonde · Assistant</p>
-            <p className="text-xs text-ink-mute">ตอบจากข้อมูลที่ทีมงานเตรียมไว้ · ไม่ใช่คำปรึกษาทางกฎหมาย</p>
+            <p className="font-semibold">Chatbot</p>
+            <p className="text-xs text-ink-mute">ask our rule-based chatbot</p>
           </div>
         </div>
         <div className="flex border-b border-brand-100 text-sm">

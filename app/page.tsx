@@ -135,10 +135,10 @@ export default function Home() {
             <span aria-hidden="true" className="pointer-events-none absolute -bottom-20 right-16 h-40 w-40 rounded-full bg-white/10" />
             <div className="relative">
               <h2 id="ask-title" className="text-xl font-bold text-white">Not sure where to start?</h2>
-              <p className="mt-1 text-sm text-white/85">ถามน้องบลอนด์เพื่อรับคำตอบทันที หรือตั้งกระทู้โดยไม่ต้องบอกว่าเป็นใคร</p>
+              <p className="mt-1 text-sm text-white/85">ถาม chatbot เพื่อรับคำตอบทันที หรือตั้งกระทู้โดยไม่ระบุตัวตน</p>
               <div className="mt-5 flex flex-wrap gap-2">
                 <Link href="/chat" className="btn bg-white text-brand-800 hover:bg-brand-50">
-                  <MessageCircle className="h-4 w-4" /> Ask Blonde
+                  <MessageCircle className="h-4 w-4" />Ask chatbot
                 </Link>
                 <Link href="/forum/new" className="btn bg-white/15 text-white ring-1 ring-white/40 hover:bg-white/25">
                   <MessagesSquare className="h-4 w-4" /> New post

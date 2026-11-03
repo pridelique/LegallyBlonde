@@ -102,7 +102,7 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
           <div className="card p-5 text-sm">
             <p className="font-semibold">ยังไม่แน่ใจ?</p>
             <div className="mt-2 flex flex-col gap-2">
-              <Link href="/chat" className="btn-soft">ถามน้องบลอนด์</Link>
+              <Link href="/chat" className="btn-soft">ถามน้อง chatbot</Link>
               <Link href="/forum/new" className="btn-ghost">ตั้งกระทู้ถาม</Link>
             </div>
           </div>
