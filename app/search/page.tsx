@@ -28,14 +28,14 @@ function Results() {
 
   return (
     <>
-      <PageHeader title={q ? `ผลการค้นหา “${q}”` : "ค้นหา"} crumbs={[{ href: "/search", label: "ค้นหา" }]}>
+      <PageHeader title={q ? `Results for “${q}”` : "Search"} crumbs={[{ href: "/search", label: "Search" }]}>
         <SearchBox />
       </PageHeader>
       <div className="container-page mt-6 space-y-8">
         {q && <ModeNotice mode={mode} q={q} />}
         {problems.results.length > 0 && problems.mode !== "empty" && (
           <section>
-            <h2 className="mb-3 text-lg font-bold">ปัญหาที่เกี่ยวข้อง</h2>
+            <h2 className="mb-3 text-lg font-bold">Related problems</h2>
             <div className="grid gap-3 md:grid-cols-2">
               {problems.results.map((r) => (
                 <ProblemItem key={r.item.id} p={r.item} />
@@ -45,7 +45,7 @@ function Results() {
         )}
         {topics.results.length > 0 && topics.mode !== "empty" && (
           <section>
-            <h2 className="mb-3 text-lg font-bold">ความรู้ที่เกี่ยวข้อง</h2>
+            <h2 className="mb-3 text-lg font-bold">Related knowledge</h2>
             <div className="grid gap-3 md:grid-cols-2">
               {topics.results.map((r) => (
                 <TopicItem key={r.item.slug} t={r.item} />

@@ -49,7 +49,7 @@ export default function ThreadPage() {
 
   return (
     <>
-      <PageHeader title={t.title} crumbs={[{ href: "/forum", label: "กระทู้ถามตอบ" }]}>
+      <PageHeader title={t.title} crumbs={[{ href: "/forum", label: "Forum" }]}>
         <div className="flex flex-wrap items-center gap-2 text-xs text-ink-mute">
           <EyeOff className="h-3.5 w-3.5" /> ผู้ใช้ไม่ระบุตัวตน · {formatDateTime(t.createdAt)}
           {t.tags.map((tag) => (

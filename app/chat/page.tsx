@@ -9,7 +9,7 @@ import { createIndex } from "@/lib/search";
 import { useAuth } from "@/lib/auth";
 import { useStored, formatDateTime, deviceId } from "@/lib/store";
 import { TICKETS_KEY, createTicket, addTicketMessage, type Ticket } from "@/lib/repos";
-import { Flower } from "@/components/Decor";
+import { LogoMark } from "@/components/Decor";
 
 interface Msg {
   id: number;
@@ -71,7 +71,7 @@ export default function ChatPage() {
         from: "bot",
         text: `ส่งคำถามถึงทีมงานแล้วค่ะ (รหัส ${t.code}) ${
           isPro ? "สมาชิก Pro จะได้รับคำตอบภายใน 1 ชั่วโมง" : "ปกติทีมงานจะตอบภายใน 48 ชั่วโมง"
-        } ดูคำตอบได้ที่แท็บ “ข้อความถึงแอดมิน”${related.mode === "match" ? "\n\nระหว่างรอ ลองดูเรื่องที่อาจเกี่ยวข้องค่ะ" : ""}`,
+        } ดูคำตอบได้ที่แท็บ “Messages”${related.mode === "match" ? "\n\nระหว่างรอ ลองดูเรื่องที่อาจเกี่ยวข้องค่ะ" : ""}`,
         links: related.mode === "match" ? related.results.map((r) => ({ href: `/problems/${r.item.id}`, label: r.item.title })) : undefined,
         options: [{ label: "กลับไปเมนูหลัก", next: CHAT_START }],
       },
@@ -84,18 +84,18 @@ export default function ChatPage() {
       <div className="card mx-auto flex h-[calc(100vh-8rem)] max-w-3xl flex-col overflow-hidden">
         {/* header */}
         <div className="flex items-center gap-3 border-b border-brand-100 bg-gradient-to-r from-brand-50 to-white px-5 py-3">
-          <Flower id="chat-avatar" size={40} petals={6} />
+          <LogoMark id="chat-avatar" size={40} />
           <div className="flex-1">
-            <p className="font-semibold">น้องบลอนด์</p>
+            <p className="font-semibold">Blonde · Assistant</p>
             <p className="text-xs text-ink-mute">ตอบจากข้อมูลที่ทีมงานเตรียมไว้ · ไม่ใช่คำปรึกษาทางกฎหมาย</p>
           </div>
         </div>
         <div className="flex border-b border-brand-100 text-sm">
           <button onClick={() => setTab("bot")} className={`flex flex-1 items-center justify-center gap-1 py-2.5 ${tab === "bot" ? "border-b-2 border-brand-700 font-semibold text-brand-800" : "text-ink-mute"}`}>
-            <Bot className="h-4 w-4" /> แชทบอท
+            <Bot className="h-4 w-4" /> Chatbot
           </button>
           <button onClick={() => setTab("admin")} className={`flex flex-1 items-center justify-center gap-1 py-2.5 ${tab === "admin" ? "border-b-2 border-brand-700 font-semibold text-brand-800" : "text-ink-mute"}`}>
-            <Headphones className="h-4 w-4" /> ข้อความถึงแอดมิน
+            <Headphones className="h-4 w-4" /> Messages
             {unread > 0 && <span className="rounded-full bg-brand-700 px-1.5 text-[10px] text-white">{unread}</span>}
           </button>
         </div>

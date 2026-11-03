@@ -29,7 +29,7 @@ export default function NewThread() {
 
   return (
     <>
-      <PageHeader title="ตั้งกระทู้ใหม่" subtitle="ไม่ต้องเข้าสู่ระบบ และจะไม่แสดงชื่อของคุณ" crumbs={[{ href: "/forum", label: "กระทู้ถามตอบ" }, { href: "/forum/new", label: "ตั้งกระทู้" }]} />
+      <PageHeader title="New post" subtitle="ไม่ต้องเข้าสู่ระบบ และจะไม่แสดงชื่อของคุณ" crumbs={[{ href: "/forum", label: "Forum" }, { href: "/forum/new", label: "New post" }]} />
       <form onSubmit={submit} className="container-page mt-6 max-w-3xl space-y-5">
         <div className="card space-y-4 p-6">
           <div>
@@ -86,7 +86,7 @@ export default function NewThread() {
         </div>
 
         <button className="btn-primary w-full sm:w-auto" disabled={!valid}>
-          โพสต์กระทู้
+          Post
         </button>
         {!valid && <p className="text-xs text-ink-mute">หัวข้ออย่างน้อย 8 ตัวอักษร รายละเอียดอย่างน้อย 20 ตัวอักษร และยอมรับกติกา</p>}
       </form>

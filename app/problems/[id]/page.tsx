@@ -23,9 +23,9 @@ export default function ProblemPage({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <PageHeader title={p.title} subtitle={p.summary} crumbs={[{ href: "/problems", label: "ค้นหาปัญหา" }]}>
+      <PageHeader title={p.title} subtitle={p.summary} crumbs={[{ href: "/problems", label: "Problems" }]}>
         <Link href={`/roadmap/${p.id}`} className="btn-primary">
-          เริ่ม Roadmap <ArrowRight className="h-4 w-4" />
+          Start Roadmap <ArrowRight className="h-4 w-4" />
         </Link>
       </PageHeader>
 

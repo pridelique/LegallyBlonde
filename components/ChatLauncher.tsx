@@ -2,19 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MessageCircleHeart } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 
+/** ปุ่มแชทลอยสำหรับจอใหญ่ (มือถือใช้ปุ่มกลางใน BottomNav แทน) */
 export default function ChatLauncher() {
   const pathname = usePathname();
   if (pathname.startsWith("/chat") || pathname.startsWith("/forms") || pathname.startsWith("/admin")) return null;
   return (
     <Link
       href="/chat"
-      className="no-print fixed bottom-5 right-5 z-30 flex items-center gap-2 rounded-full bg-brand-700 px-4 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-800"
-      aria-label="เปิดแชทบอท"
+      className="no-print fixed bottom-6 right-6 z-30 hidden min-h-[52px] items-center gap-2.5 rounded-full bg-brand-700 py-2 pl-2 pr-5 text-sm font-semibold text-white shadow-pop transition hover:bg-brand-800 md:flex"
+      aria-label="Ask Blonde แชทบอท"
     >
-      <MessageCircleHeart className="h-5 w-5" />
-      <span className="hidden sm:inline">ถามน้องบลอนด์</span>
+      <span className="flex h-9 w-9 rotate-45 items-center justify-center rounded-xl bg-white/20">
+        <MessageCircle className="h-5 w-5 -rotate-45" />
+      </span>
+      Ask Blonde
     </Link>
   );
 }

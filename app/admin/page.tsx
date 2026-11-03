@@ -43,14 +43,14 @@ export default function AdminPage() {
   const pendingReq = requests.filter((r) => r.status === "pending");
 
   const TABS = [
-    { k: "tickets" as const, label: "ข้อความแชท", icon: Inbox, n: waiting.length },
-    { k: "verify" as const, label: "คำขอยืนยันตัวตน", icon: ShieldCheck, n: pendingReq.length },
-    { k: "forum" as const, label: "ดูแลกระทู้", icon: MessagesSquare, n: threads.length },
+    { k: "tickets" as const, label: "Chat inbox", icon: Inbox, n: waiting.length },
+    { k: "verify" as const, label: "Verifications", icon: ShieldCheck, n: pendingReq.length },
+    { k: "forum" as const, label: "Moderation", icon: MessagesSquare, n: threads.length },
   ];
 
   return (
     <>
-      <PageHeader title="แดชบอร์ดแอดมิน" subtitle="ตอบแชท อนุมัติผู้ตอบ และดูแลเนื้อหา" crumbs={[{ href: "/admin", label: "แอดมิน" }]} />
+      <PageHeader title="Admin dashboard" subtitle="ตอบแชท อนุมัติผู้ตอบ และดูแลเนื้อหา" crumbs={[{ href: "/admin", label: "Admin" }]} />
       <div className="container-page mt-6">
         <div className="flex flex-wrap gap-2">
           {TABS.map((t) => (

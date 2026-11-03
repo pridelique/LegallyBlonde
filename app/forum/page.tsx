@@ -25,16 +25,16 @@ export default function ForumPage() {
   return (
     <>
       <PageHeader
-        title="กระทู้ถามตอบ"
+        title="Community Forum"
         subtitle="ถามได้โดยไม่ต้องเปิดเผยตัวตน ผู้ตอบเป็นผู้ใช้ที่ยืนยันตัวตนแล้ว เช่น ทนายความ นักศึกษานิติศาสตร์ และเจ้าหน้าที่องค์กรพาร์ทเนอร์ ได้ความเห็นหลายมุมมอง"
-        crumbs={[{ href: "/forum", label: "กระทู้ถามตอบ" }]}
+        crumbs={[{ href: "/forum", label: "Forum" }]}
       >
         <div className="flex flex-wrap gap-2">
           <Link href="/forum/new" className="btn-primary">
-            <PenLine className="h-4 w-4" /> ตั้งกระทู้แบบไม่ระบุตัวตน
+            <PenLine className="h-4 w-4" /> New anonymous post
           </Link>
           <Link href="/verify" className="btn-soft">
-            <ShieldCheck className="h-4 w-4" /> สมัครเป็นผู้ตอบ
+            <ShieldCheck className="h-4 w-4" /> Become a responder
           </Link>
         </div>
       </PageHeader>
@@ -43,7 +43,7 @@ export default function ForumPage() {
         <div className="flex flex-col gap-3 sm:flex-row">
           <label className="relative block flex-1">
             <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-mute" />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="ค้นหากระทู้" className="input !rounded-full !pl-10" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search posts" className="input !rounded-full !pl-10" />
           </label>
           <div className="flex gap-2">
             {(["all", "unanswered"] as const).map((f) => (
@@ -52,7 +52,7 @@ export default function ForumPage() {
                 onClick={() => setFilter(f)}
                 className={`rounded-full px-4 py-2 text-sm ${filter === f ? "bg-brand-700 text-white" : "bg-brand-50 text-brand-900"}`}
               >
-                {f === "all" ? "ทั้งหมด" : "ยังไม่มีคำตอบ"}
+                {f === "all" ? "All" : "Unanswered"}
               </button>
             ))}
           </div>
@@ -65,8 +65,8 @@ export default function ForumPage() {
 
         <div className="mt-5 space-y-3">
           {list.length === 0 ? (
-            <Empty title="ยังไม่มีกระทู้">
-              <Link href="/forum/new" className="btn-primary mt-2">ตั้งกระทู้แรก</Link>
+            <Empty title="No posts yet">
+              <Link href="/forum/new" className="btn-primary mt-2">Create the first post</Link>
             </Empty>
           ) : (
             list.map((t) => (

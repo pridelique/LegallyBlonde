@@ -13,7 +13,7 @@ const ITEMS = [
 export default function PrivacyPage() {
   return (
     <>
-      <PageHeader title="ความเป็นส่วนตัวและการคุ้มครองข้อมูล" crumbs={[{ href: "/privacy", label: "ความเป็นส่วนตัว" }]} />
+      <PageHeader title="Privacy" subtitle="ความเป็นส่วนตัวและการคุ้มครองข้อมูล" crumbs={[{ href: "/privacy", label: "Privacy" }]} />
       <div className="container-page mt-6 max-w-3xl space-y-3">
         {ITEMS.map((i) => (
           <div key={i.h} className="card p-5">

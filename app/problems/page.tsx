@@ -26,9 +26,9 @@ export default function ProblemsPage() {
   return (
     <>
       <PageHeader
-        title="ระบบค้นหาปัญหา"
+        title="Find your problem"
         subtitle="เล่าปัญหาด้วยคำของคุณเอง ระบบจะเรียงเรื่องที่เกี่ยวข้องที่สุดให้ ถ้าไม่เจอตรง ๆ จะหาเรื่องที่ใกล้เคียงให้แทน"
-        crumbs={[{ href: "/problems", label: "ค้นหาปัญหา" }]}
+        crumbs={[{ href: "/problems", label: "Problems" }]}
       >
         <label className="relative block max-w-xl">
           <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-mute" />

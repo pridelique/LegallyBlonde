@@ -35,9 +35,9 @@ function KnowledgeInner() {
   return (
     <>
       <PageHeader
-        title="คลังความรู้ด้านสิทธิแรงงาน"
+        title="Knowledge Base"
         subtitle="เลือกประเภทแรงงานก่อน แล้วเลือกเรื่องที่อยากรู้ ทุกหัวข้อมีสรุปสั้น คำอธิบายแบบละเอียด และแหล่งอ้างอิง"
-        crumbs={[{ href: "/knowledge", label: "คลังความรู้" }]}
+        crumbs={[{ href: "/knowledge", label: "Knowledge" }]}
       />
       <div className="container-page mt-6">
         {/* Step 1: เลือกประเภทแรงงาน */}
@@ -66,7 +66,7 @@ function KnowledgeInner() {
         {/* Search */}
         <label className="relative mt-6 block">
           <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-mute" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="ค้นหาในคลังความรู้" className="input !rounded-full !pl-10" />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search knowledge" className="input !rounded-full !pl-10" />
         </label>
         {q && (
           <div className="mt-3">

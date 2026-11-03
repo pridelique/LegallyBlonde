@@ -27,10 +27,10 @@ import ContactCard from "./ContactCard";
 import { FORM_LABEL } from "@/lib/forms";
 
 const STEPS = [
-  { n: 1, title: "เช็คปัญหา", icon: ClipboardCheck },
-  { n: 2, title: "เช็คสถานะ", icon: UserCheck },
-  { n: 3, title: "เตรียมหลักฐาน", icon: FolderOpen },
-  { n: 4, title: "ติดต่อหน่วยงาน", icon: Building2 },
+  { n: 1, title: "Check", icon: ClipboardCheck },
+  { n: 2, title: "Status", icon: UserCheck },
+  { n: 3, title: "Evidence", icon: FolderOpen },
+  { n: 4, title: "Contact", icon: Building2 },
 ];
 
 export default function RoadmapRunner({ problemId }: { problemId: string }) {
@@ -68,8 +68,8 @@ export default function RoadmapRunner({ problemId }: { problemId: string }) {
         title={p.title}
         subtitle="Roadmap จะพาทำทีละขั้น ความคืบหน้าบันทึกอัตโนมัติ"
         crumbs={[
-          { href: "/roadmap", label: "Roadmap ของฉัน" },
-          { href: `/roadmap/${p.id}`, label: "ขั้นตอน" },
+          { href: "/roadmap", label: "My Roadmaps" },
+          { href: `/roadmap/${p.id}`, label: "Steps" },
         ]}
       />
 
@@ -97,13 +97,13 @@ export default function RoadmapRunner({ problemId }: { problemId: string }) {
                       ? "bg-brand-700 text-white shadow-soft"
                       : done
                         ? "bg-green-50 text-ok ring-1 ring-green-200"
-                        : "bg-white text-ink-mute ring-1 ring-brand-100"
+                        : "bg-white text-ink-soft shadow-soft"
                   }`}
                   aria-current={current ? "step" : undefined}
                 >
                   {done ? <Check className="h-4 w-4" /> : <s.icon className="h-4 w-4" />}
                   <span>
-                    <span className="hidden sm:inline">ขั้นที่ {s.n} · </span>
+                    <span className="hidden sm:inline">Step {s.n} · </span>
                     {s.title}
                   </span>
                 </button>
@@ -155,12 +155,12 @@ export default function RoadmapRunner({ problemId }: { problemId: string }) {
 
 type P = NonNullable<ReturnType<typeof getProblem>>;
 
-function Nav({ back, next, nextLabel = "ไปขั้นถัดไป", disabled = false }: { back?: () => void; next?: () => void; nextLabel?: string; disabled?: boolean }) {
+function Nav({ back, next, nextLabel = "Next step", disabled = false }: { back?: () => void; next?: () => void; nextLabel?: string; disabled?: boolean }) {
   return (
     <div className="mt-6 flex items-center justify-between gap-3">
       {back ? (
         <button onClick={back} className="btn-ghost">
-          <ChevronLeft className="h-4 w-4" /> ย้อนกลับ
+          <ChevronLeft className="h-4 w-4" /> Back
         </button>
       ) : (
         <span />
@@ -179,7 +179,7 @@ function CheckRow({ checked, onClick, children, sub }: { checked: boolean; onCli
     <button
       onClick={onClick}
       className={`flex w-full items-start gap-3 rounded-xl p-3 text-left transition ${
-        checked ? "bg-brand-50 ring-1 ring-brand-300" : "bg-white ring-1 ring-brand-100 hover:bg-brand-50/50"
+        checked ? "bg-petal" : "bg-page hover:bg-tint"
       }`}
       role="checkbox"
       aria-checked={checked}

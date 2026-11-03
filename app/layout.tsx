@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Providers from "@/components/Providers";
 import ChatLauncher from "@/components/ChatLauncher";
+import BottomNav from "@/components/BottomNav";
 
 export const metadata: Metadata = {
   title: "Legally Blonde · รู้สิทธิแรงงาน เตรียมตัวก่อนร้องเรียน",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#BE185D",
+  themeColor: "#FBF3F7",
   width: "device-width",
   initialScale: 1,
 };
@@ -32,9 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Providers>
           <Navbar />
-          <main className="min-h-[70vh]">{children}</main>
+          <main className="min-h-[70vh] pb-28 md:pb-0">{children}</main>
           <Footer />
           <ChatLauncher />
+          <BottomNav />
         </Providers>
       </body>
     </html>

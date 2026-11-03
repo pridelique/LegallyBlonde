@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BookMarked, CalendarClock, Route, Sparkles } from "lucide-react";
+import { BookMarked, CalendarClock, Route, ListChecks } from "lucide-react";
 import { PageHeader, Notice, LEGAL_REVIEW_NOTE } from "@/components/ui";
 import { KNOWLEDGE, getTopic } from "@/lib/data/knowledge";
 import { PROBLEMS } from "@/lib/data/problems";
@@ -38,7 +38,7 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
           {/* สรุปสั้น */}
           <section className="card bg-gradient-to-br from-white to-brand-50 p-6">
             <h2 className="flex items-center gap-2 font-bold text-brand-800">
-              <Sparkles className="h-4 w-4" /> สรุปสั้น
+              <ListChecks className="h-4 w-4" /> Summary
             </h2>
             <ul className="mt-3 space-y-2">
               {t.short.map((s, i) => (
@@ -52,7 +52,7 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
 
           {/* คำอธิบายแบบยาว */}
           <section className="card prose-legal p-6">
-            <h2 className="text-lg font-bold">อธิบายแบบละเอียด</h2>
+            <h2 className="text-lg font-bold">In detail</h2>
             {t.long.map((l) => (
               <div key={l.heading}>
                 <h3>{l.heading}</h3>
@@ -64,7 +64,7 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
           {/* อ้างอิง */}
           <section className="card p-6">
             <h2 className="flex items-center gap-2 font-bold">
-              <BookMarked className="h-4 w-4" /> แหล่งอ้างอิง
+              <BookMarked className="h-4 w-4" /> References
             </h2>
             <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-ink-soft">
               {t.refs.map((r) => (

@@ -56,7 +56,7 @@ export default function MyRoadmaps() {
 
   return (
     <>
-      <PageHeader title="Roadmap ของฉัน" subtitle="ความคืบหน้าและประวัติการดำเนินการของคุณ" crumbs={[{ href: "/roadmap", label: "Roadmap ของฉัน" }]} />
+      <PageHeader title="My Roadmaps" subtitle="ความคืบหน้าและประวัติการดำเนินการของคุณ" crumbs={[{ href: "/roadmap", label: "My Roadmaps" }]} />
       <div className="container-page mt-6 space-y-8">
         {!user && (
           <Notice>
@@ -64,20 +64,20 @@ export default function MyRoadmaps() {
           </Notice>
         )}
         {ready && list.length === 0 ? (
-          <Empty title="ยังไม่มี Roadmap">
-            <Link href="/problems" className="btn-primary mt-2">เลือกปัญหาเพื่อเริ่ม</Link>
+          <Empty title="No roadmaps yet">
+            <Link href="/problems" className="btn-primary mt-2">Pick a problem to start</Link>
           </Empty>
         ) : (
           <>
             {active.length > 0 && (
               <section>
-                <h2 className="mb-3 text-lg font-bold">กำลังดำเนินการ</h2>
+                <h2 className="mb-3 text-lg font-bold">In progress</h2>
                 <div className="space-y-3">{active.map((r) => <Item key={r.problemId} r={r} />)}</div>
               </section>
             )}
             {done.length > 0 && (
               <section>
-                <h2 className="mb-3 text-lg font-bold">ประวัติที่ดำเนินการเรียบร้อยแล้ว</h2>
+                <h2 className="mb-3 text-lg font-bold">Completed</h2>
                 <div className="space-y-3">{done.map((r) => <Item key={r.problemId} r={r} />)}</div>
               </section>
             )}

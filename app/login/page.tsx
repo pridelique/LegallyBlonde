@@ -4,7 +4,7 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Mail } from "lucide-react";
 import { useAuth } from "@/lib/auth";
-import { Flower } from "@/components/Decor";
+
 import { Notice } from "@/components/ui";
 import { applyApprovedToUser } from "@/lib/repos";
 
@@ -32,15 +32,15 @@ function LoginInner() {
 
   return (
     <div className="container-page relative flex min-h-[70vh] items-center justify-center py-10">
-      <Flower id="login-f1" size={180} className="pointer-events-none absolute left-0 top-10 hidden opacity-60 md:block" />
-      <Flower id="login-f2" size={110} petals={5} className="pointer-events-none absolute bottom-10 right-10 hidden opacity-60 md:block" from="#FDE68A" to="#F9A8D4" />
+      <span aria-hidden="true" className="pointer-events-none absolute -left-20 top-0 hidden h-80 w-80 rounded-full bg-petal md:block" />
+      <span aria-hidden="true" className="pointer-events-none absolute -right-10 bottom-0 hidden h-56 w-56 rounded-full bg-bloom/60 md:block" />
       <div className="card relative w-full max-w-md p-8">
-        <h1 className="text-2xl font-bold">เข้าสู่ระบบ</h1>
+        <h1 className="text-3xl font-bold">Sign in</h1>
         <p className="mt-1 text-sm text-ink-soft">เพื่อเก็บความคืบหน้า Roadmap ไม่ให้หาย และใช้งานได้หลายอุปกรณ์</p>
 
         <form onSubmit={submit} className="mt-6 space-y-4">
           <div>
-            <label className="label" htmlFor="email">อีเมล</label>
+            <label className="label" htmlFor="email">Email</label>
             <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input" placeholder="you@example.com" autoComplete="email" />
           </div>
           <div>
@@ -48,7 +48,7 @@ function LoginInner() {
             <input id="name" value={name} onChange={(e) => setName(e.target.value)} className="input" placeholder="เช่น มะลิ" />
           </div>
           <button className="btn-primary w-full" disabled={!valid || sent}>
-            <Mail className="h-4 w-4" /> {sent ? "กำลังเข้าสู่ระบบ…" : "รับลิงก์เข้าสู่ระบบทางอีเมล"}
+            <Mail className="h-4 w-4" /> {sent ? "Signing in…" : "Email me a sign-in link"}
           </button>
         </form>
 

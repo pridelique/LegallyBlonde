@@ -73,9 +73,9 @@ export default function VerifyPage() {
   return (
     <>
       <PageHeader
-        title="ยืนยันตัวตนเพื่อเป็นผู้ตอบ"
+        title="Verify your identity"
         subtitle="ผู้ตอบกระทู้ต้องยืนยันตัวตน เพื่อให้ผู้ถามมั่นใจในคำตอบ ระบบจะแสดงป้ายตามประเภทของคุณ"
-        crumbs={[{ href: "/forum", label: "กระทู้ถามตอบ" }, { href: "/verify", label: "ยืนยันตัวตน" }]}
+        crumbs={[{ href: "/forum", label: "Forum" }, { href: "/verify", label: "Verify" }]}
       />
       <div className="container-page mt-6 max-w-3xl space-y-5">
         {user.role !== "user" ? (

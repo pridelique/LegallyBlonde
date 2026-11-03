@@ -17,8 +17,13 @@ const config: Config = {
           800: "#9D174D",
           900: "#831843",
         },
-        ink: { DEFAULT: "#1F2937", soft: "#4B5563", mute: "#6B7280" },
-        cream: "#FFFBFA",
+        /* ชมพูหลายระดับสำหรับพื้นผิว: page < tint < petal < bloom */
+        page: "#FBF3F7",
+        tint: "#F7E6EF",
+        petal: "#F2D4E3",
+        bloom: "#E9B9D0",
+        ink: { DEFAULT: "#2A1F27", soft: "#5B4A55", mute: "#7A6872" },
+        cream: "#FBF3F7",
         ok: "#15803D",
         warn: "#B45309",
         danger: "#B91C1C",
@@ -28,7 +33,11 @@ const config: Config = {
         doc: ["Sarabun", "Noto Sans Thai", "serif"],
       },
       boxShadow: {
-        soft: "0 6px 24px -8px rgba(190, 24, 93, 0.18)",
+        soft: "0 1px 2px rgba(131, 24, 67, 0.04), 0 10px 30px -14px rgba(131, 24, 67, 0.16)",
+        pop: "0 14px 30px -12px rgba(219, 39, 119, 0.45)",
+      },
+      borderRadius: {
+        "4xl": "2rem",
       },
       keyframes: {
         floaty: { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-8px)" } },

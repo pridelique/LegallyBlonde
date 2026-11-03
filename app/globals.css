@@ -7,13 +7,18 @@
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    @apply bg-cream text-ink font-sans antialiased;
+    @apply bg-page font-sans text-ink antialiased;
     font-size: 16px;
     line-height: 1.7;
   }
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     @apply text-ink;
     line-height: 1.35;
+  }
+  ::selection {
+    background: #fbcfe8;
   }
 }
 
@@ -21,30 +26,55 @@
   .container-page {
     @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
   }
+
+  /* ── พื้นผิว (ชมพูหลายระดับ) ── */
   .card {
-    @apply rounded-2xl bg-white shadow-soft ring-1 ring-brand-100;
+    @apply rounded-3xl bg-white shadow-soft;
   }
+  .card-tint {
+    @apply rounded-3xl bg-tint;
+  }
+  .card-petal {
+    @apply rounded-3xl bg-petal;
+  }
+
+  /* ── ปุ่ม ── */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-200 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-200 disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-primary {
-    @apply btn bg-brand-700 text-white hover:bg-brand-800;
+    @apply btn bg-brand-700 text-white shadow-pop hover:bg-brand-800;
   }
   .btn-soft {
-    @apply btn bg-brand-50 text-brand-800 hover:bg-brand-100;
+    @apply btn bg-white text-brand-800 shadow-soft hover:bg-brand-50;
+  }
+  .btn-tint {
+    @apply btn bg-tint text-brand-900 hover:bg-petal;
   }
   .btn-ghost {
-    @apply btn text-ink-soft hover:bg-brand-50;
+    @apply btn text-ink-soft hover:bg-tint;
   }
+  /* ปุ่มไอคอนวงกลมสีขาว */
+  .icon-btn {
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink shadow-soft transition hover:bg-brand-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-200;
+  }
+
+  /* ── ฟอร์ม ── */
   .input {
-    @apply w-full rounded-xl border border-brand-100 bg-white px-4 py-2.5 text-ink placeholder:text-ink-mute focus:border-brand-400 focus:outline-none focus:ring-4 focus:ring-brand-100;
+    @apply w-full rounded-2xl border border-transparent bg-white px-4 py-3 text-ink shadow-soft placeholder:text-ink-mute focus:border-brand-300 focus:outline-none focus:ring-4 focus:ring-brand-100;
   }
   .label {
-    @apply mb-1 block text-sm font-medium text-ink-soft;
+    @apply mb-1.5 block text-sm font-medium text-ink-soft;
   }
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-800;
+    @apply inline-flex items-center gap-1 rounded-full bg-tint px-3 py-1 text-xs font-medium text-brand-900;
   }
+
+  /* ป้ายเล็กเหนือหัวข้อ */
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.16em] text-brand-700;
+  }
+
   .prose-legal p {
     @apply mb-3;
   }

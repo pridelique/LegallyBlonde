@@ -23,7 +23,7 @@ export default function AccountPage() {
 
   return (
     <>
-      <PageHeader title={`สวัสดี ${user.displayName}`} subtitle={user.email} crumbs={[{ href: "/account", label: "บัญชีของฉัน" }]} />
+      <PageHeader title={`Hi, ${user.displayName}`} subtitle={user.email} crumbs={[{ href: "/account", label: "Account" }]} />
       <div className="container-page mt-6 grid gap-4 md:grid-cols-2">
         <section className="card p-6">
           <p className="text-sm text-ink-mute">สถานะบัญชี</p>
@@ -85,7 +85,7 @@ export default function AccountPage() {
             }}
             className="btn-ghost mt-4 text-danger"
           >
-            <LogOut className="h-4 w-4" /> ออกจากระบบ
+            <LogOut className="h-4 w-4" /> Sign out
           </button>
         </div>
       </div>

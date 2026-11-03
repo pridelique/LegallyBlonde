@@ -10,9 +10,9 @@ export default function ContactsPage() {
   return (
     <>
       <PageHeader
-        title="ช่องทางติดต่อหน่วยงาน"
+        title="Contacts"
         subtitle="รวมช่องทางติดต่อกระทรวงแรงงาน หน่วยงานรัฐ ความช่วยเหลือทางกฎหมาย และองค์กรภาคประชาสังคมที่เกี่ยวข้อง"
-        crumbs={[{ href: "/contacts", label: "ช่องทางติดต่อ" }]}
+        crumbs={[{ href: "/contacts", label: "Contacts" }]}
       />
       <div className="container-page mt-6 space-y-10">
         {sectors.map((s) => (
