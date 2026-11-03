@@ -45,7 +45,7 @@ function LoginInner() {
           </div>
           <div>
             <label className="label" htmlFor="name">ชื่อที่แสดง (ไม่ต้องใช้ชื่อจริง)</label>
-            <input id="name" value={name} onChange={(e) => setName(e.target.value)} className="input" placeholder="เช่น มะลิ" />
+            <input id="name" value={name} onChange={(e) => setName(e.target.value)} className="input" placeholder="" />
           </div>
           <button className="btn-primary w-full" disabled={!valid || sent}>
             <Mail className="h-4 w-4" /> {sent ? "Signing in…" : "Email me a sign-in link"}
@@ -54,7 +54,7 @@ function LoginInner() {
 
         <div className="mt-6">
           <Notice>
-            โหมดเดโม: ยังไม่ได้เชื่อมฐานข้อมูล ระบบจะเข้าสู่ระบบทันทีโดยไม่ส่งอีเมล ใช้อีเมลที่ขึ้นต้นด้วย <b>admin@</b> เพื่อทดลองสิทธิ์แอดมิน
+            ใช้อีเมลที่ขึ้นต้นด้วย <b>admin@</b> เพื่อทดลองสิทธิ์แอดมิน
           </Notice>
         </div>
       </div>
