@@ -1,35 +1,60 @@
-/** Banner หน้าแรก (F_00) */
 export const BANNERS = [
   {
     id: "b1",
     title: "ทำ part-time แล้วไม่ได้เงิน?",
-    text: "เช็คสิทธิและเริ่ม Roadmap เตรียมหลักฐานได้ใน 5 นาที",
+    text: "เช็คสิทธิและเริ่ม Roadmap เตรียมหลักฐาน",
     href: "/problems/unpaid-wages",
     cta: "Start now",
-    from: "#F2D4E3",
-    to: "#F7E6EF",
+    from: "#F9D3E3", 
+    to: "#FFE3D3",
   },
   {
     id: "b2",
     title: "อายุต่ำกว่า 18 ทำงานได้ถึงกี่โมง?",
-    text: "ลูกจ้างเด็กได้รับความคุ้มครองเพิ่ม อ่านสรุปสั้นได้ที่คลังความรู้",
+    text: "ได้รับความคุ้มครองเพิ่ม อ่านสรุปสั้นได้ที่คลังความรู้",
     href: "/knowledge/young-workers",
     cta: "Read summary",
-    from: "#F7E6EF",
-    to: "#FBF3F7",
+    from: "#E4DBFA", 
+    to: "#F7DDEA",
   },
   {
     id: "b3",
-    title: "ถามได้โดยไม่ต้องบอกว่าเป็นใคร",
+    title: "ถามได้โดยไม่ระบุตัวตน",
     text: "ตั้งกระทู้แบบไม่ระบุตัวตน ตอบโดยผู้ใช้ที่ยืนยันตัวตนแล้ว",
     href: "/forum",
     cta: "Open forum",
-    from: "#E9B9D0",
-    to: "#F2D4E3",
+    from: "#D9E8FA", 
+    to: "#E6DDF8",
+  },
+  {
+    id: "b4",
+    title: "ค่าแรงขั้นต่ำไม่เท่ากันทุกจังหวัด",
+    text: "ทำงาน part-time รายชั่วโมงก็ต้องได้ไม่ต่ำกว่าเกณฑ์ ดูวิธีเทียบค่าแรงของตัวเอง",
+    href: "/knowledge/minimum-wage",
+    cta: "Learn more",
+    from: "#FFDCCB",
+    to: "#FFF0C9",
+  },
+  {
+    id: "b5",
+    title: "ฟรีแลนซ์ส่งงานแล้วไม่ได้เงิน?",
+    text: "งานจ้างทำของเรียกร้องได้ เริ่มจากหนังสือทวงถามที่สร้างได้ในเว็บ",
+    href: "/problems/freelance-unpaid",
+    cta: "See steps",
+    from: "#D5F0E6",
+    to: "#DCEBFA",
+  },
+  {
+    id: "b6",
+    title: "กรอกแบบฟอร์มในเว็บ แล้วพิมพ์เป็น PDF",
+    text: "เตรียมข้อมูลคำร้องไว้ล่วงหน้า บันทึกในเครื่องของคุณเท่านั้น",
+    href: "/forms/kr7-prep",
+    cta: "Try the form",
+    from: "#F4C6DA", 
+    to: "#DCD3F6",
   },
 ];
 
-/** คำพ้องสำหรับ search: ภาษาชาวบ้าน ⇄ ศัพท์กฎหมาย (ทีม legal เพิ่มได้) */
 export const SYNONYMS: string[][] = [
   ["โดนไล่ออก", "ไล่ออก", "ให้ออก", "เลิกจ้าง", "ตกงาน", "ไม่จัดกะ", "ถูกเลิกจ้าง"],
   ["โอที", "ot", "ค่าล่วงเวลา", "ทำงานเกินเวลา", "ล่วงเวลา"],
@@ -47,7 +72,6 @@ export const SYNONYMS: string[][] = [
   ["ค่าชดเชย", "เงินชดเชย"],
 ];
 
-/** กระทู้ตัวอย่าง (F_05) */
 export const SEED_THREADS = [
   {
     id: "t-seed-1",

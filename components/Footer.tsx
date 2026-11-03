@@ -29,7 +29,7 @@ const COLS = [
 
 export default function Footer() {
   return (
-    <footer className="container-page mt-20 pb-6">
+    <footer className="container-page mt-20 pb-32 md:pb-6">      
       <div className="card grid gap-10 p-8 md:grid-cols-[1.4fr_repeat(3,1fr)] md:p-10">
         <div>
           <div className="flex items-center gap-2.5">
