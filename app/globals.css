@@ -5,11 +5,17 @@
 @layer base {
   html {
     -webkit-tap-highlight-color: transparent;
+    overflow-x: clip;
   }
   body {
     @apply bg-page font-sans text-ink antialiased;
     font-size: 16px;
     line-height: 1.7;
+    overflow-x: clip;
+    overflow-wrap: break-word;
+  }
+  .grid > * {
+    min-width: 0;
   }
   h1,
   h2,
@@ -61,7 +67,7 @@
 
   /* ── ฟอร์ม ── */
   .input {
-    @apply w-full rounded-2xl border border-transparent bg-white px-4 py-3 text-ink shadow-soft placeholder:text-ink-mute focus:border-brand-300 focus:outline-none focus:ring-4 focus:ring-brand-100;
+    @apply w-full min-w-0 rounded-2xl border border-transparent bg-white px-4 py-3 text-ink shadow-soft placeholder:text-ink-mute focus:border-brand-300 focus:outline-none focus:ring-4 focus:ring-brand-100;
   }
   .label {
     @apply mb-1.5 block text-sm font-medium text-ink-soft;

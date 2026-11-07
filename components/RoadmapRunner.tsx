@@ -383,8 +383,8 @@ function Step4({ rm, back, complete }: { rm: RoadmapTemplate; back: () => void; 
                   </a>
                 )}
                 {c.links?.map((l) => (
-                  <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="btn-soft !min-h-[40px] !px-4 !py-2">
-                    {l.label} <ExternalLink className="h-3.5 w-3.5" />
+                  <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="btn-soft !min-h-[40px] max-w-full !px-4 !py-2 [overflow-wrap:anywhere]">
+                    <span className="min-w-0">{l.label}</span> <ExternalLink className="h-3.5 w-3.5 shrink-0" />
                   </a>
                 ))}
               </div>

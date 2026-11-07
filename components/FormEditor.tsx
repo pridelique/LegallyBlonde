@@ -165,7 +165,7 @@ export default function FormEditor({ type }: { type: FormType }) {
 
         <section className="lg:sticky lg:top-20 lg:self-start">
           <p className="no-print mb-2 text-sm font-semibold text-ink-soft">ตัวอย่างเอกสาร</p>
-          <div className="print-doc card bg-white p-8 font-doc text-[15px] leading-relaxed text-black">
+          <div className="print-doc card bg-white p-5 font-doc [overflow-wrap:anywhere] sm:p-8 text-[15px] leading-relaxed text-black">
             {schema.layout === "letter" ? <LetterPreview v={values} /> : <SheetPreview schema={schema} v={values} />}
           </div>
         </section>
@@ -248,11 +248,11 @@ function SheetPreview({ schema, v }: { schema: FormSchema; v: Values }) {
       {schema.sections.map((sec) => (
         <div key={sec.title} className="mt-5">
           <p className="border-b border-gray-300 pb-1 font-bold">{sec.title}</p>
-          <dl className="mt-2 grid grid-cols-[38%_1fr] gap-x-3 gap-y-1.5">
+          <dl className="mt-2 grid grid-cols-[38%_minmax(0,1fr)] gap-x-3 gap-y-1.5">
             {sec.fields.map((f) => (
               <div key={f.name} className="contents">
                 <dt className="text-gray-600">{f.type === "multi" ? "รายการ" : f.label}</dt>
-                <dd className="whitespace-pre-wrap">
+                <dd className="whitespace-pre-wrap [overflow-wrap:anywhere]">
                   <Blank>{show(v[f.name], f.type)}</Blank>
                   {f.name === "wage" && v.wageUnit ? ` / ${v.wageUnit}` : ""}
                 </dd>

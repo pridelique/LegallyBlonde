@@ -71,7 +71,7 @@ export default function Home() {
         <BannerCarousel />
       </section>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-12">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12">
         <div className="space-y-6 lg:col-span-7">
           <Workspace />
 
@@ -108,15 +108,15 @@ export default function Home() {
                 All contacts
               </Link>
             </div>
-            <ul className="mt-4 grid grid-cols-3 gap-3">
+            <ul className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
               {hotlines.map((c) => (
                 <li key={c.id}>
-                  <a href={`tel:${c.hotline!.number}`} className="flex h-full flex-col gap-3 rounded-2xl bg-white/80 p-3.5 transition hover:bg-white sm:p-4">
+                  <a href={`tel:${c.hotline!.number}`} className="flex h-full flex-col gap-2.5 rounded-2xl bg-white/80 p-3 transition hover:bg-white sm:gap-3 sm:p-4">
                     <IconCircle icon={Phone} tone="tint" size="sm" />
-                    <span>
-                      <span className="flex items-baseline gap-1">
-                        <span className="text-xl font-bold tabular-nums">{c.hotline!.number}</span>
-                        {c.hotline!.ext && <span className="text-xs font-semibold text-brand-800">{c.hotline!.ext}</span>}
+                    <span className="min-w-0">
+                      <span className="flex flex-wrap items-baseline gap-x-1">
+                        <span className="text-lg font-bold tabular-nums sm:text-xl">{c.hotline!.number}</span>
+                        {c.hotline!.ext && <span className="whitespace-nowrap text-xs font-semibold text-brand-800">{c.hotline!.ext}</span>}
                       </span>
                       <span className="block text-[11px] leading-tight text-ink-soft sm:text-xs">{c.name}</span>
                     </span>

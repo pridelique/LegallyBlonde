@@ -51,7 +51,7 @@ export default function Workspace() {
             My roadmaps
           </Link>
         </div>
-        <div className="mt-4 grid grid-cols-3 gap-3">
+        <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
           <Tile icon={Route} value={ready ? String(data.active.length) : "–"} label="Active roadmaps" href="/roadmap" />
           <Tile icon={FolderCheck} value={ready ? (data.evTotal ? `${data.evDone}/${data.evTotal}` : "0") : "–"} label="Evidence ready" href="/roadmap" />
           <Tile
@@ -124,10 +124,10 @@ function Tile({
   small?: boolean;
 }) {
   return (
-    <Link href={href} className="flex flex-col gap-3 rounded-2xl bg-white/80 p-3.5 transition hover:bg-white sm:p-4">
+    <Link href={href} className="flex flex-col gap-2.5 rounded-2xl bg-white/80 p-3 transition hover:bg-white sm:gap-3 sm:p-4">
       <IconCircle icon={icon} tone="tint" size="sm" />
-      <span>
-        <span className={`block font-bold tabular-nums ${small ? "text-sm sm:text-base" : "text-xl"}`}>{value}</span>
+      <span className="min-w-0">
+        <span className={`block font-bold tabular-nums ${small ? "text-sm sm:text-base" : "text-lg sm:text-xl"}`}>{value}</span>
         <span className="block text-[11px] leading-tight text-ink-soft sm:text-xs">{label}</span>
       </span>
     </Link>
