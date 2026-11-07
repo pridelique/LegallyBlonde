@@ -56,7 +56,7 @@ export default function Home() {
           <h1 className="mt-4 max-w-2xl text-4xl font-bold leading-tight sm:text-6xl">
             รู้สิทธิ เตรียมหลักฐาน
             <br />
-            <span className="bg-gradient-to-r from-brand-700 to-brand-500 bg-clip-text text-transparent">ไม่ต้องสู้คนเดียว</span>
+            <span className="bg-gradient-to-r from-brand-700 to-brand-500 bg-clip-text text-transparent">สู่การทำงานที่เป็นธรรม</span>
           </h1>
           <p className="mt-4 max-w-xl sm:text-lg text-ink-soft">
             Understand your rights at work in plain language, then prepare step by step until you’re ready to contact the right agency — anonymously.</p>
