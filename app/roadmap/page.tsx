@@ -58,11 +58,6 @@ export default function MyRoadmaps() {
     <>
       <PageHeader title="My Roadmaps" subtitle="Every case you’re working on, all in one place. Pick up right where you left off." crumbs={[{ href: "/roadmap", label: "My Roadmaps" }]} />
       <div className="container-page mt-6 space-y-8">
-        {!user && (
-          <Notice>
-            ประวัติเก็บในเครื่องนี้เท่านั้น <Link href="/login" className="font-semibold underline">เข้าสู่ระบบ</Link> เพื่อไม่ให้ความคืบหน้าหาย (เมื่อเชื่อมฐานข้อมูลแล้ว)
-          </Notice>
-        )}
         {ready && list.length === 0 ? (
           <Empty title="No roadmaps yet">
             <Link href="/problems" className="btn-primary mt-2">Pick a problem to start</Link>

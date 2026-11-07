@@ -81,10 +81,6 @@ export default function RoadmapRunner({ problemId }: { problemId: string }) {
       <div className="container-page mt-6">
         {!user && (
           <div className="mb-4">
-            <Notice>
-              ยังไม่ได้เข้าสู่ระบบ ความคืบหน้าจะเก็บไว้ในเครื่องนี้เท่านั้น ถ้าล้างข้อมูลเบราว์เซอร์อาจหายได้{" "}
-              <Link href="/login" className="font-semibold underline">เข้าสู่ระบบ</Link>
-            </Notice>
           </div>
         )}
 

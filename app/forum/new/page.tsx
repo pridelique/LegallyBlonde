@@ -29,16 +29,16 @@ export default function NewThread() {
 
   return (
     <>
-      <PageHeader title="New post" subtitle="ไม่ต้องเข้าสู่ระบบ และจะไม่แสดงชื่อของคุณ" crumbs={[{ href: "/forum", label: "Forum" }, { href: "/forum/new", label: "New post" }]} />
+      <PageHeader title="New post" subtitle="Create new post anonymously" crumbs={[{ href: "/forum", label: "Forum" }, { href: "/forum/new", label: "New post" }]} />
       <form onSubmit={submit} className="container-page mt-6 max-w-3xl space-y-5">
         <div className="card space-y-4 p-6">
           <div>
             <label className="label" htmlFor="title">หัวข้อ</label>
-            <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} maxLength={120} className="input" placeholder="เช่น ทำงาน part-time 3 เดือน โดนไล่ออกไม่บอกล่วงหน้า" />
+            <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} maxLength={120} className="input" placeholder="your question" />
           </div>
           <div>
             <label className="label" htmlFor="body">รายละเอียด</label>
-            <textarea id="body" value={body} onChange={(e) => setBody(e.target.value)} rows={7} maxLength={3000} className="input" placeholder="เล่าสถานการณ์ เช่น ทำงานมานานแค่ไหน ได้ค่าจ้างแบบไหน เกิดอะไรขึ้น" />
+            <textarea id="body" value={body} onChange={(e) => setBody(e.target.value)} rows={7} maxLength={3000} className="input" placeholder="add details on your current situation" />
             <p className="mt-1 text-right text-xs text-ink-mute">{body.length}/3000</p>
           </div>
           <div>

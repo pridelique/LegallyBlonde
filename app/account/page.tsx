@@ -59,11 +59,11 @@ export default function AccountPage() {
             <p className="flex items-center gap-2 text-lg font-bold">
               <Crown className="h-5 w-5 text-amber-600" /> Legally Blonde Pro
             </p>
-            <p className="text-sm text-ink-soft">{user.plan === "pro" ? "คุณเป็นสมาชิก Pro" : "แพ็กเกจเสริม (ตัวอย่างสำหรับต้นแบบ)"}</p>
+            <p className="text-sm text-ink-soft">{user.plan === "pro" ? "คุณเป็นสมาชิก Pro" : "แพ็กเกจเสริม"}</p>
           </div>
           <div className="p-6">
             <ul className="space-y-1.5 text-sm">
-              {["แอดมินตอบแชทภายใน 1 ชั่วโมง", "คิวตอบกระทู้แบบเร่งด่วน", "สำรองข้อมูล Roadmap และแบบฟอร์มบนคลาวด์ (เข้ารหัส)"].map((b) => (
+              {["แอดมินตอบแชทภายใน 1 ชั่วโมง", "คิวตอบกระทู้แบบเร่งด่วน", "สำรองข้อมูล Roadmap และแบบฟอร์มบนคลาวด์"].map((b) => (
                 <li key={b} className="flex gap-2">
                   <Check className="mt-0.5 h-4 w-4 shrink-0 text-ok" /> {b}
                 </li>
@@ -72,12 +72,10 @@ export default function AccountPage() {
             <button onClick={() => updateUser({ plan: user.plan === "pro" ? "free" : "pro" })} className="btn-primary mt-4">
               {user.plan === "pro" ? "ยกเลิก Pro (เดโม)" : "ทดลองเปิด Pro (เดโม)"}
             </button>
-            <p className="mt-2 text-xs text-ink-mute">ยังไม่มีระบบชำระเงิน · TODO: เชื่อม Omise/Stripe (PromptPay)</p>
           </div>
         </section>
 
         <div className="md:col-span-2">
-          <Notice>ข้อมูลที่ใช้ในเดโมนี้เก็บไว้ในเบราว์เซอร์ของคุณเท่านั้น</Notice>
           <button
             onClick={() => {
               logout();

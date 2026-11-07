@@ -36,7 +36,6 @@ function LoginInner() {
       <span aria-hidden="true" className="pointer-events-none absolute -right-10 bottom-0 hidden h-56 w-56 rounded-full bg-bloom/60 md:block" />
       <div className="card relative w-full max-w-md p-8">
         <h1 className="text-3xl font-bold">Sign in</h1>
-        <p className="mt-1 text-sm text-ink-soft">เพื่อเก็บความคืบหน้า Roadmap ไม่ให้หาย และใช้งานได้หลายอุปกรณ์</p>
 
         <form onSubmit={submit} className="mt-6 space-y-4">
           <div>
@@ -44,7 +43,7 @@ function LoginInner() {
             <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input" placeholder="you@example.com" autoComplete="email" />
           </div>
           <div>
-            <label className="label" htmlFor="name">ชื่อที่แสดง (ไม่ต้องใช้ชื่อจริง)</label>
+            <label className="label" htmlFor="name">username</label>
             <input id="name" value={name} onChange={(e) => setName(e.target.value)} className="input" placeholder="" />
           </div>
           <button className="btn-primary w-full" disabled={!valid || sent}>
@@ -52,11 +51,6 @@ function LoginInner() {
           </button>
         </form>
 
-        <div className="mt-6">
-          <Notice>
-            ใช้อีเมลที่ขึ้นต้นด้วย <b>admin@</b> เพื่อทดลองสิทธิ์แอดมิน
-          </Notice>
-        </div>
       </div>
     </div>
   );

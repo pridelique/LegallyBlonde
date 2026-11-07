@@ -12,9 +12,9 @@ import { ALLOWED_UNI_DOMAINS, INVITE_CODES, VERIFY_KEY, submitVerify, applyAppro
 type Method = VerifyRequest["method"];
 
 const METHODS: { m: Method; type: VerifiedType; icon: typeof Scale; title: string; text: string }[] = [
-  { m: "lawyer_license", type: "lawyer", icon: Scale, title: "ทนายความ", text: "กรอกเลขใบอนุญาตทนายความ แอดมินจะตรวจกับระบบค้นหาทนายของสภาทนายความ" },
+  { m: "lawyer_license", type: "lawyer", icon: Scale, title: "ทนายความ", text: "กรอกเลขใบอนุญาตทนายความ" },
   { m: "university_email", type: "law_student", icon: GraduationCap, title: "นักศึกษานิติศาสตร์", text: "ยืนยันด้วยอีเมลมหาวิทยาลัย (ส่งรหัส OTP)" },
-  { m: "invite_code", type: "org", icon: Building, title: "องค์กรพาร์ทเนอร์", text: "ใช้รหัสเชิญที่ได้รับจากองค์กร ยืนยันทันที" },
+  { m: "invite_code", type: "org", icon: Building, title: "องค์กรพาร์ทเนอร์", text: "ใช้รหัสเชิญที่ได้รับจากองค์กร" },
 ];
 
 export default function VerifyPage() {
@@ -74,7 +74,7 @@ export default function VerifyPage() {
     <>
       <PageHeader
         title="Verify your identity"
-        subtitle="ผู้ตอบกระทู้ต้องยืนยันตัวตน เพื่อให้ผู้ถามมั่นใจในคำตอบ ระบบจะแสดงป้ายตามประเภทของคุณ"
+        subtitle="ผู้ตอบกระทู้ต้องยืนยันตัวตน"
         crumbs={[{ href: "/forum", label: "Forum" }, { href: "/verify", label: "Verify" }]}
       />
       <div className="container-page mt-6 max-w-3xl space-y-5">
@@ -124,7 +124,6 @@ export default function VerifyPage() {
                     <label className="label" htmlFor="lic">เลขใบอนุญาตทนายความ</label>
                     <input id="lic" value={detail} onChange={(e) => setDetail(e.target.value)} className="input" placeholder="เช่น 12345/2560" />
                   </div>
-                  <Notice>แอดมินตรวจเลขใบอนุญาตด้วยตนเอง เราเก็บเฉพาะผลการตรวจ ไม่เก็บรูปบัตร</Notice>
                 </>
               )}
               {method === "university_email" && (
