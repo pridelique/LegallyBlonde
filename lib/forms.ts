@@ -45,7 +45,7 @@ export const FORMS: Record<FormType, FormSchema> = {
     type: "kr7-prep",
     title: FORM_LABEL["kr7-prep"],
     description:
-      "รวบรวมข้อมูลที่มักต้องใช้ตอนยื่นคำร้องต่อพนักงานตรวจแรงงาน กรอกไว้ล่วงหน้าแล้วนำไปกรอกแบบฟอร์มทางการหรือยื่นออนไลน์ได้สะดวกขึ้น",
+      "ข้อมูลที่มักต้องใช้ตอนยื่นคำร้องต่อพนักงานตรวจแรงงาน",
     layout: "sheet",
     sections: [
       {
