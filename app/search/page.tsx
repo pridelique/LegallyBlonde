@@ -12,7 +12,7 @@ import { KNOWLEDGE } from "@/lib/data/knowledge";
 const problemIndex = createIndex(PROBLEMS, (p) => ({
   title: p.title,
   keywords: p.keywords,
-  body: `${p.summary} ${p.symptoms.join(" ")}`,
+  body: `${p.summary} ${p.detail ?? ""} ${p.roadmap?.checklist.join(" ") ?? ""}`,
 }));
 const topicIndex = createIndex(KNOWLEDGE, (t) => ({
   title: t.title,

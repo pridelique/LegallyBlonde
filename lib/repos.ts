@@ -24,9 +24,7 @@ export interface RoadmapProgress {
   step: number;
   symptoms: number[];
   status: {
-    isEmployee?: "yes" | "no" | "unsure";
-    under18?: "yes" | "no";
-    stillWorking?: "yes" | "no";
+    answers?: Record<string, number>;
     lastIncidentDate?: string;
   };
   evidence: number[];

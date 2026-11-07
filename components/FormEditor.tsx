@@ -35,7 +35,7 @@ export default function FormEditor({ type }: { type: FormType }) {
       setSavedAt(draft.savedAt);
     } else if (problem) {
       const prog = readLS<Record<string, RoadmapProgress>>(ROADMAP_KEY, {})[problem.id];
-      const evidence = prog ? prog.evidence.map((i) => "- " + problem.evidence[i]?.item).join("\n") : "";
+      const evidence = prog && problem.roadmap ? prog.evidence.map((i) => "- " + problem.roadmap!.evidence[i]?.item).join("\n") : "";
       setValues({
         claims: CLAIM_BY_PROBLEM[problem.id] || [],
         evidence,

@@ -23,11 +23,12 @@ export default function Workspace() {
     for (const r of active) {
       const p = getProblem(r.problemId);
       if (!p) continue;
+      if (!p.roadmap) continue;
       evDone += r.evidence.length;
-      evTotal += p.evidence.length;
-      if (r.status.lastIncidentDate && p.prescription.years > 0) {
+      evTotal += p.roadmap.evidence.length;
+      if (r.status.lastIncidentDate && p.roadmap.prescription.years > 0) {
         const d = new Date(r.status.lastIncidentDate);
-        d.setFullYear(d.getFullYear() + p.prescription.years);
+        d.setFullYear(d.getFullYear() + p.roadmap.prescription.years);
         if (d.getTime() > Date.now() && (!next || d < next.date)) next = { date: d, title: p.title };
       }
     }

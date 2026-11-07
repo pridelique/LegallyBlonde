@@ -21,35 +21,61 @@ export interface KnowledgeTopic {
 
 export type FormType = "kr7-prep" | "demand-letter" | "civil-claim-prep";
 
+export interface StatusOption {
+  label: string;
+  result: string;
+  tone: "ok" | "info" | "warn" | "stop";
+}
+
+export interface StatusQuestion {
+  id: string;
+  question: string;
+  options: StatusOption[];
+}
+
+export interface ContactStep {
+  title: string;
+  detail: string;
+  phone?: string;
+  links?: { label: string; href: string }[];
+}
+
+export interface RoadmapTemplate {
+  checklist: string[];
+  questions: StatusQuestion[];
+  prescription: { years: number; text: string };
+  evidence: { item: string; examples: string }[];
+  forms: FormType[];
+  contacts: ContactStep[];
+  whileWaiting: string[];
+}
+
 export interface Problem {
   id: string;
   title: string;
   summary: string;
+  detail?: string;
   group: string;
   keywords: string[];
   relatedTopics: string[];
-  /** Step 1: ข้อความให้ติ๊กว่าตรงกับสถานการณ์ไหม */
-  symptoms: string[];
-  /** Step 2: ใช้กฎหมายคุ้มครองแรงงาน (ต้องเป็นลูกจ้าง) หรือไม่ */
-  needsEmployeeStatus: boolean;
-  prescription: { years: number; note: string };
-  /** Step 3 */
-  evidence: { item: string; tip?: string; required?: boolean }[];
-  forms: FormType[];
-  /** Step 4: id ใน contacts */
-  agencies: string[];
-  agencyNote: string;
-  /** หลังกด completed */
-  whileWaiting: string[];
+  roadmap?: RoadmapTemplate;
+}
+
+export type ContactSector = "labour" | "legal" | "rights" | "civil" | "workplace";
+
+export interface ContactChannel {
+  kind: "phone" | "line" | "web" | "email" | "facebook" | "note";
+  label: string;
+  value: string;
+  href?: string;
 }
 
 export interface Contact {
   id: string;
+  no: number;
   name: string;
-  sector: "ministry" | "government" | "legal" | "civil";
+  sector: ContactSector;
   description: string;
-  phone?: string;
-  line?: string;
-  website?: string;
-  handles: string[];
+  hotline?: { number: string; ext?: string; label: string };
+  channels: ContactChannel[];
 }

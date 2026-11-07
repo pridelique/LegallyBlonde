@@ -15,15 +15,15 @@ import {
   FileText,
   ExternalLink,
   RotateCcw,
+  Phone,
+  Hourglass,
 } from "lucide-react";
 import { getProblem } from "@/lib/data/problems";
-import { getContact } from "@/lib/data/contacts";
-import type { FormType } from "@/lib/data/types";
+import type { Problem, RoadmapTemplate, StatusOption } from "@/lib/data/types";
 import { useStored, formatDate } from "@/lib/store";
 import { newProgress, ROADMAP_KEY, type RoadmapProgress } from "@/lib/repos";
 import { useAuth } from "@/lib/auth";
 import { PageHeader, Notice, LEGAL_REVIEW_NOTE } from "./ui";
-import ContactCard from "./ContactCard";
 import StepTrack from "./Steptrack";
 import { FORM_LABEL } from "@/lib/forms";
 
@@ -61,6 +61,11 @@ export default function RoadmapRunner({ problemId }: { problemId: string }) {
     update({ step: n });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  const rm = p.roadmap;
+  const complete = () => {
+    update({ step: 5, completedAt: new Date().toISOString() });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -86,29 +91,24 @@ export default function RoadmapRunner({ problemId }: { problemId: string }) {
         <StepTrack steps={STEPS} current={step} onSelect={go} />
 
         <div className="mt-6">
-          {step === 1 && <Step1 prog={prog} p={p} onToggle={(i) => update({ symptoms: toggle(prog.symptoms, i) })} next={() => go(2)} />}
-          {step === 2 && <Step2 prog={prog} p={p} update={update} back={() => go(1)} next={() => go(3)} />}
-          {step === 3 && (
-            <Step3 prog={prog} p={p} onToggle={(i) => update({ evidence: toggle(prog.evidence, i) })} back={() => go(2)} next={() => go(4)} />
-          )}
-          {step === 4 && (
-            <Step4
-              prog={prog}
-              p={p}
-              onContact={(id) =>
-                update({ contacted: prog.contacted.includes(id) ? prog.contacted.filter((x) => x !== id) : [...prog.contacted, id] })
-              }
-              back={() => go(3)}
-              complete={() => {
-                update({ step: 5, completedAt: new Date().toISOString() });
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+          {step <= 4 && !rm && (
+            <NoData
+              step={step}
+              back={step > 1 ? () => go(step - 1) : undefined}
+              next={step < 4 ? () => go(step + 1) : undefined}
+              complete={step === 4 ? complete : undefined}
             />
           )}
+          {rm && step === 1 && <Step1 rm={rm} prog={prog} onToggle={(i) => update({ symptoms: toggle(prog.symptoms, i) })} next={() => go(2)} />}
+          {rm && step === 2 && <Step2 rm={rm} prog={prog} update={update} back={() => go(1)} next={() => go(3)} />}
+          {rm && step === 3 && (
+            <Step3 rm={rm} p={p} prog={prog} onToggle={(i) => update({ evidence: toggle(prog.evidence, i) })} back={() => go(2)} next={() => go(4)} />
+          )}
+          {rm && step === 4 && <Step4 rm={rm} back={() => go(3)} complete={complete} />}
           {step >= 5 && (
             <Completed
+              rm={rm}
               prog={prog}
-              p={p}
               reopen={() => update({ step: 4, completedAt: undefined })}
               restart={() => setAll((prev) => ({ ...prev, [problemId]: newProgress(problemId) }))}
             />
@@ -122,8 +122,6 @@ export default function RoadmapRunner({ problemId }: { problemId: string }) {
     </>
   );
 }
-
-type P = NonNullable<ReturnType<typeof getProblem>>;
 
 function Nav({ back, next, nextLabel = "Next step", disabled = false }: { back?: () => void; next?: () => void; nextLabel?: string; disabled?: boolean }) {
   return (
@@ -148,35 +146,60 @@ function CheckRow({ checked, onClick, children, sub }: { checked: boolean; onCli
   return (
     <button
       onClick={onClick}
-      className={`flex w-full items-start gap-3 rounded-xl p-3 text-left transition ${
-        checked ? "bg-petal" : "bg-page hover:bg-tint"
-      }`}
+      className={`flex w-full items-start gap-3 rounded-2xl p-3.5 text-left transition ${checked ? "bg-petal" : "bg-page hover:bg-tint"}`}
       role="checkbox"
       aria-checked={checked}
     >
-      <span
-        className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md ${
-          checked ? "bg-brand-700 text-white" : "bg-white ring-1 ring-brand-200"
-        }`}
-      >
+      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md ${checked ? "bg-brand-700 text-white" : "bg-white ring-1 ring-brand-200"}`}>
         {checked && <Check className="h-3.5 w-3.5" />}
       </span>
       <span>
         <span className="block">{children}</span>
-        {sub && <span className="mt-0.5 block text-xs text-ink-mute">{sub}</span>}
+        {sub && <span className="mt-0.5 block text-xs text-ink-soft">{sub}</span>}
       </span>
     </button>
   );
 }
 
-function Step1({ prog, p, onToggle, next }: { prog: RoadmapProgress; p: P; onToggle: (i: number) => void; next: () => void }) {
+function CompleteBox({ onClick }: { onClick: () => void }) {
+  return (
+    <div className="mt-6 rounded-2xl bg-tint p-5 text-center">
+      <p className="font-semibold">ยื่นเรื่องหรือดำเนินการเรียบร้อยแล้ว?</p>
+      <button onClick={onClick} className="btn-primary mt-3">
+        <Check className="h-4 w-4" /> ดำเนินการเรียบร้อยแล้ว
+      </button>
+    </div>
+  );
+}
+
+function NoData({ step, back, next, complete }: { step: number; back?: () => void; next?: () => void; complete?: () => void }) {
+  const titles = ["เช็คปัญหา", "เช็คสถานะ", "เตรียมหลักฐาน", "ติดต่อหน่วยงาน"];
+  return (
+    <section className="card p-6">
+      <h2 className="text-lg font-bold">
+        ขั้นที่ {step}: {titles[step - 1]}
+      </h2>
+      <div className="mt-4 flex flex-col items-center rounded-2xl bg-page px-6 py-10 text-center">
+        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-tint text-brand-700">
+          <Hourglass className="h-5 w-5" />
+        </span>
+        <p className="mt-3 font-semibold">ยังไม่มีข้อมูลสำหรับขั้นนี้</p>
+        <p className="mt-1 text-sm text-ink-soft">ข้อมูลของปัญหานี้อยู่ระหว่างจัดทำ</p>
+      </div>
+      {complete && <CompleteBox onClick={complete} />}
+      <Nav back={back} next={next} />
+    </section>
+  );
+}
+
+function Step1({ rm, prog, onToggle, next }: { rm: RoadmapTemplate; prog: RoadmapProgress; onToggle: (i: number) => void; next: () => void }) {
   const n = prog.symptoms.length;
   return (
     <section className="card p-6">
-      <h2 className="text-lg font-bold">ขั้นที่ 1: ตรงกับสถานการณ์ของคุณไหม</h2>
-      <p className="mt-1 text-sm text-ink-soft">ติ๊กข้อที่ตรงกับคุณ เพื่อประเมินเบื้องต้นว่ากำลังเจอปัญหานี้จริงหรือไม่</p>
+      <h2 className="text-lg font-bold">ขั้นที่ 1: เช็กลิสต์ประเมินเบื้องต้นว่ากำลังเจอปัญหานี้จริงไหม</h2>
+      <p className="mt-1 text-sm text-ink-soft">ติ๊กข้อที่ตรงกับสถานการณ์ของคุณ</p>
       <div className="mt-4 space-y-2">
-        {p.symptoms.map((s, i) => (
+        {rm.checklist.map((s, i) => (
           <CheckRow key={i} checked={prog.symptoms.includes(i)} onClick={() => onToggle(i)}>
             {s}
           </CheckRow>
@@ -184,10 +207,12 @@ function Step1({ prog, p, onToggle, next }: { prog: RoadmapProgress; p: P; onTog
       </div>
       <div className="mt-4">
         {n === 0 ? (
-          <Notice>ยังไม่ได้เลือกข้อไหน ถ้าไม่ตรงเลย ลอง <Link href="/problems" className="font-semibold underline">ค้นหาปัญหาอื่น</Link></Notice>
+          <Notice>
+            ยังไม่ได้เลือกข้อไหน ถ้าไม่ตรงเลย ลอง <Link href="/problems" className="font-semibold underline">ค้นหาปัญหาอื่น</Link>
+          </Notice>
         ) : (
           <Notice>
-            ตรงกับ {n} จาก {p.symptoms.length} ข้อ {n >= Math.ceil(p.symptoms.length / 2) ? "มีแนวโน้มว่ากำลังเจอปัญหานี้" : "อาจเจอปัญหานี้บางส่วน"} ไปเช็คสถานะต่อได้เลย
+            ตรงกับ {n} จาก {rm.checklist.length} ข้อ ไปเช็คสถานะต่อได้เลย
           </Notice>
         )}
       </div>
@@ -196,117 +221,94 @@ function Step1({ prog, p, onToggle, next }: { prog: RoadmapProgress; p: P; onTog
   );
 }
 
-function Choice<T extends string>({ value, options, onChange }: { value?: T; options: { v: T; label: string }[]; onChange: (v: T) => void }) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((o) => (
-        <button
-          key={o.v}
-          onClick={() => onChange(o.v)}
-          className={`rounded-full px-4 py-2 text-sm transition ${value === o.v ? "bg-brand-700 text-white" : "bg-brand-50 text-brand-900 hover:bg-brand-100"}`}
-        >
-          {o.label}
-        </button>
-      ))}
-    </div>
-  );
-}
+const TONE: Record<StatusOption["tone"], string> = {
+  ok: "bg-green-50 text-ok",
+  info: "bg-tint text-brand-900",
+  warn: "bg-amber-50 text-amber-900",
+  stop: "bg-red-50 text-danger",
+};
 
-function Step2({ prog, p, update, back, next }: { prog: RoadmapProgress; p: P; update: (x: Partial<RoadmapProgress>) => void; back: () => void; next: () => void }) {
+function Step2({
+  rm,
+  prog,
+  update,
+  back,
+  next,
+}: {
+  rm: RoadmapTemplate;
+  prog: RoadmapProgress;
+  update: (x: Partial<RoadmapProgress>) => void;
+  back: () => void;
+  next: () => void;
+}) {
   const s = prog.status;
-  const setS = (patch: Partial<RoadmapProgress["status"]>) => update({ status: { ...s, ...patch } });
+  const answers = s.answers || {};
+  const setAnswer = (id: string, i: number) => update({ status: { ...s, answers: { ...answers, [id]: i } } });
 
   const deadline = useMemo(() => {
-    if (!s.lastIncidentDate || p.prescription.years <= 0) return null;
+    if (!s.lastIncidentDate || rm.prescription.years <= 0) return null;
     const d = new Date(s.lastIncidentDate);
-    d.setFullYear(d.getFullYear() + p.prescription.years);
+    d.setFullYear(d.getFullYear() + rm.prescription.years);
     const monthsLeft = Math.floor((d.getTime() - Date.now()) / (1000 * 60 * 60 * 24 * 30.44));
     return { date: d, monthsLeft };
-  }, [s.lastIncidentDate, p.prescription.years]);
+  }, [s.lastIncidentDate, rm.prescription.years]);
 
   return (
     <section className="card p-6">
-      <h2 className="text-lg font-bold">ขั้นที่ 2: เช็คสถานะตัวเองและอายุความ</h2>
-      <p className="mt-1 text-sm text-ink-soft">คำตอบในขั้นนี้ใช้บอกว่าร้องเรียนช่องทางไหนได้ และยังทันเวลาหรือไม่</p>
+      <h2 className="text-lg font-bold">ขั้นที่ 2: เช็คสถานะตนเองว่าสามารถร้องเรียนได้ไหม</h2>
 
-      <div className="mt-5 space-y-5">
-        {p.needsEmployeeStatus && (
-          <div>
-            <p className="label">นายจ้างเป็นคนกำหนดเวลาทำงานและสั่งงานคุณใช่ไหม</p>
-            <Choice
-              value={s.isEmployee}
-              onChange={(v) => setS({ isEmployee: v })}
-              options={[
-                { v: "yes", label: "ใช่ (น่าจะเป็นลูกจ้าง)" },
-                { v: "no", label: "ไม่ใช่ รับงานเป็นชิ้น" },
-                { v: "unsure", label: "ไม่แน่ใจ" },
-              ]}
-            />
-            {s.isEmployee === "no" && (
-              <div className="mt-2">
-                <Notice tone="warn">
-                  ถ้าเป็นการจ้างทำของ (ฟรีแลนซ์) จะร้องเรียนผ่านพนักงานตรวจแรงงานไม่ได้ ลองดู{" "}
-                  <Link href="/roadmap/freelance-unpaid" className="font-semibold underline">Roadmap ฟรีแลนซ์</Link>
-                </Notice>
+      <div className="mt-5 space-y-6">
+        {rm.questions.map((q, qi) => {
+          const picked = answers[q.id];
+          const opt = picked !== undefined ? q.options[picked] : undefined;
+          return (
+            <div key={q.id}>
+              <p className="font-semibold">
+                Q{qi + 1} {q.question}
+              </p>
+              <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                {q.options.map((o, i) => (
+                  <button
+                    key={o.label}
+                    onClick={() => setAnswer(q.id, i)}
+                    aria-pressed={picked === i}
+                    className={`rounded-2xl px-4 py-2.5 text-left text-sm transition ${
+                      picked === i ? "bg-brand-700 font-semibold text-white" : "bg-page text-ink hover:bg-tint"
+                    }`}
+                  >
+                    {o.label}
+                  </button>
+                ))}
               </div>
-            )}
-            {s.isEmployee === "unsure" && (
-              <div className="mt-2">
-                <Notice>
-                  อ่าน <Link href="/knowledge/am-i-employee" className="font-semibold underline">เราเป็นลูกจ้างหรือเปล่า</Link> หรือทำต่อไปก่อนก็ได้ แล้วค่อยสอบถามเจ้าหน้าที่ตอนยื่นเรื่อง
-                </Notice>
-              </div>
-            )}
-          </div>
-        )}
-
-        <div>
-          <p className="label">ตอนที่ทำงาน คุณอายุต่ำกว่า 18 ปีไหม</p>
-          <Choice value={s.under18} onChange={(v) => setS({ under18: v })} options={[{ v: "yes", label: "ใช่" }, { v: "no", label: "ไม่ใช่" }]} />
-          {s.under18 === "yes" && (
-            <div className="mt-2">
-              <Notice>
-                ลูกจ้างเด็กได้รับความคุ้มครองเพิ่ม เช่น ห้ามทำงานกลางคืนและห้ามทำ OT อ่าน{" "}
-                <Link href="/knowledge/young-workers" className="font-semibold underline">สิทธิลูกจ้างเด็ก</Link> และควรมีผู้ปกครองหรือผู้ใหญ่ที่ไว้ใจช่วยดำเนินการ
-              </Notice>
+              {opt && <p className={`mt-2 rounded-2xl px-4 py-3 text-sm font-medium ${TONE[opt.tone]}`}>{opt.result}</p>}
             </div>
-          )}
-        </div>
+          );
+        })}
 
         <div>
-          <p className="label">ตอนนี้ยังทำงานที่นั่นอยู่ไหม</p>
-          <Choice value={s.stillWorking} onChange={(v) => setS({ stillWorking: v })} options={[{ v: "yes", label: "ยังทำอยู่" }, { v: "no", label: "ออกแล้ว" }]} />
-          {s.stillWorking === "yes" && (
-            <div className="mt-2">
-              <Notice>เก็บหลักฐาน (แคปแชท สลิป ตารางกะ) ไว้ก่อนแจ้งนายจ้างหรือก่อนลาออก เพราะหลังจากนั้นอาจเข้าถึงไม่ได้แล้ว</Notice>
-            </div>
-          )}
-        </div>
-
-        <div>
-          <label className="label" htmlFor="incident">วันที่เกิดปัญหาครั้งล่าสุด (เช่น วันที่ควรได้เงิน หรือวันที่ถูกให้ออก)</label>
+          <p className="font-semibold">อายุความ</p>
+          <p className="mt-1 text-sm text-ink-soft">{rm.prescription.text}</p>
+          <label className="label mt-3" htmlFor="incident">
+            วันที่ค่าล่วงเวลาถึงกำหนดจ่าย (งวดที่ไม่ได้รับ)
+          </label>
           <input
             id="incident"
             type="date"
             value={s.lastIncidentDate || ""}
             max={new Date().toISOString().slice(0, 10)}
-            onChange={(e) => setS({ lastIncidentDate: e.target.value })}
+            onChange={(e) => update({ status: { ...s, lastIncidentDate: e.target.value } })}
             className="input max-w-xs"
           />
-          <div className="mt-3 rounded-xl bg-brand-50 p-4 text-sm">
-            <p className="font-semibold text-brand-900">อายุความ</p>
-            <p className="mt-1 text-ink-soft">{p.prescription.note}</p>
-            {deadline &&
-              (deadline.monthsLeft >= 0 ? (
-                <p className={`mt-2 font-semibold ${deadline.monthsLeft <= 3 ? "text-danger" : "text-ok"}`}>
-                  ควรดำเนินการก่อน {formatDate(deadline.date.toISOString())} (เหลือประมาณ {deadline.monthsLeft} เดือน)
-                </p>
-              ) : (
-                <p className="mt-2 flex items-center gap-1 font-semibold text-danger">
-                  <AlertTriangle className="h-4 w-4" /> อาจเกินอายุความแล้ว ควรปรึกษาผู้เชี่ยวชาญโดยเร็ว
-                </p>
-              ))}
-          </div>
+          {deadline &&
+            (deadline.monthsLeft >= 0 ? (
+              <p className={`mt-3 text-sm font-semibold ${deadline.monthsLeft <= 3 ? "text-danger" : "text-ok"}`}>
+                ควรดำเนินการก่อน {formatDate(deadline.date.toISOString())} (เหลือประมาณ {deadline.monthsLeft} เดือน)
+              </p>
+            ) : (
+              <p className="mt-3 flex items-center gap-1 text-sm font-semibold text-danger">
+                <AlertTriangle className="h-4 w-4" /> อาจเกินอายุความแล้ว ควรปรึกษาผู้เชี่ยวชาญโดยเร็ว
+              </p>
+            ))}
         </div>
       </div>
       <Nav back={back} next={next} />
@@ -314,113 +316,131 @@ function Step2({ prog, p, update, back, next }: { prog: RoadmapProgress; p: P; u
   );
 }
 
-function Step3({ prog, p, onToggle, back, next }: { prog: RoadmapProgress; p: P; onToggle: (i: number) => void; back: () => void; next: () => void }) {
-  const requiredIdx = p.evidence.map((e, i) => (e.required ? i : -1)).filter((i) => i >= 0);
-  const requiredDone = requiredIdx.filter((i) => prog.evidence.includes(i)).length;
+function Step3({
+  rm,
+  p,
+  prog,
+  onToggle,
+  back,
+  next,
+}: {
+  rm: RoadmapTemplate;
+  p: Problem;
+  prog: RoadmapProgress;
+  onToggle: (i: number) => void;
+  back: () => void;
+  next: () => void;
+}) {
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
       <section className="card p-6">
-        <h2 className="text-lg font-bold">ขั้นที่ 3: เตรียมหลักฐานและเอกสาร</h2>
+        <h2 className="text-lg font-bold">ขั้นที่ 3: เตรียมหลักฐาน แบบฟอร์ม และเอกสาร</h2>
         <p className="mt-1 text-sm text-ink-soft">
-          ติ๊กสิ่งที่มีแล้ว รายการนี้เป็นแนวทางเบื้องต้น ไม่ใช่การรับรองว่าหลักฐานทุกชิ้นจำเป็นหรือเพียงพอสำหรับทุกกรณี
+          ติ๊กสิ่งที่มีแล้ว · พร้อมแล้ว {prog.evidence.length}/{rm.evidence.length}
         </p>
-        <p className="mt-3 text-sm font-semibold text-brand-800">
-          รายการสำคัญ: {requiredDone}/{requiredIdx.length} · ทั้งหมด: {prog.evidence.length}/{p.evidence.length}
-        </p>
-        <div className="mt-3 space-y-2">
-          {p.evidence.map((e, i) => (
-            <CheckRow key={i} checked={prog.evidence.includes(i)} onClick={() => onToggle(i)} sub={e.tip}>
-              {e.item} {e.required && <span className="ml-1 rounded bg-brand-100 px-1.5 py-0.5 text-[10px] font-semibold text-brand-800">สำคัญ</span>}
+        <div className="mt-4 space-y-2">
+          {rm.evidence.map((e, i) => (
+            <CheckRow key={i} checked={prog.evidence.includes(i)} onClick={() => onToggle(i)} sub={e.examples}>
+              {i + 1}. {e.item}
             </CheckRow>
           ))}
         </div>
         <Nav back={back} next={next} />
       </section>
 
-      <aside className="space-y-4">
-        <div className="card p-5">
-          <p className="flex items-center gap-2 font-semibold">
-            <FileText className="h-4 w-4 text-brand-700" /> แบบฟอร์มที่แก้ในเว็บได้
-          </p>
-          <p className="mt-1 text-xs text-ink-soft">กรอกในเว็บ บันทึกอัตโนมัติ แล้วดาวน์โหลดเป็น PDF หรือเซฟเป็นไฟล์เก็บไว้ได้</p>
-          <div className="mt-3 space-y-2">
-            {p.forms.map((f: FormType) => (
-              <Link key={f} href={`/forms/${f}?problem=${p.id}`} className="flex items-center justify-between rounded-xl bg-brand-50 p-3 text-sm hover:bg-brand-100">
-                {FORM_LABEL[f]}
-                <ChevronRight className="h-4 w-4" />
-              </Link>
-            ))}
+      {rm.forms.length > 0 && (
+        <aside className="space-y-4">
+          <div className="card p-5">
+            <p className="flex items-center gap-2 font-semibold">
+              <FileText className="h-4 w-4 text-brand-700" /> แบบฟอร์ม
+            </p>
+            <div className="mt-3 space-y-2">
+              {rm.forms.map((f) => (
+                <Link key={f} href={`/forms/${f}?problem=${p.id}`} className="flex items-center justify-between rounded-2xl bg-page p-3 text-sm hover:bg-tint">
+                  {FORM_LABEL[f]}
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="card p-5 text-sm">
-          <p className="font-semibold">แบบฟอร์มเปล่าจากหน่วยงาน</p>
-          <p className="mt-1 text-xs text-ink-soft">ดาวน์โหลดแบบฟอร์มฉบับล่าสุดจากเว็บไซต์ทางการเสมอ</p>
-          <a href="https://www.labour.go.th" target="_blank" rel="noopener noreferrer" className="btn-soft mt-3 w-full">
-            เว็บไซต์กรมสวัสดิการฯ <ExternalLink className="h-3.5 w-3.5" />
-          </a>
-        </div>
-      </aside>
+        </aside>
+      )}
     </div>
   );
 }
 
-function Step4({ prog, p, onContact, back, complete }: { prog: RoadmapProgress; p: P; onContact: (id: string) => void; back: () => void; complete: () => void }) {
+function Step4({ rm, back, complete }: { rm: RoadmapTemplate; back: () => void; complete: () => void }) {
   return (
     <section className="card p-6">
-      <h2 className="text-lg font-bold">ขั้นที่ 4: ติดต่อหน่วยงานที่เกี่ยวข้อง</h2>
-      <p className="mt-1 text-sm text-ink-soft">{p.agencyNote}</p>
-      <p className="mt-1 text-xs text-ink-mute">เว็บไซต์นี้แนะนำช่องทางเท่านั้น ไม่ได้ส่งเรื่องแทนคุณ</p>
-      <div className="mt-4 grid gap-3 md:grid-cols-2">
-        {p.agencies.map((id) => {
-          const c = getContact(id);
-          if (!c) return null;
-          const done = prog.contacted.includes(id);
-          return (
-            <div key={id} className="flex flex-col gap-2">
-              <ContactCard c={c} />
-              <button onClick={() => onContact(id)} className={done ? "btn bg-green-50 text-ok ring-1 ring-green-200" : "btn-soft"}>
-                {done ? <><Check className="h-4 w-4" /> ติดต่อแล้ว</> : "ทำเครื่องหมายว่าติดต่อแล้ว"}
-              </button>
+      <h2 className="text-lg font-bold">ขั้นที่ 4: ช่องทางติดต่อหน่วยงานที่เกี่ยวข้อง</h2>
+      <ol className="mt-4 space-y-3">
+        {rm.contacts.map((c, i) => (
+          <li key={c.title} className="flex gap-4 rounded-2xl bg-page p-4">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-tint text-sm font-bold text-brand-800">{i + 1}</span>
+            <div className="min-w-0 flex-1">
+              <p className="font-semibold">{c.title}</p>
+              <p className="mt-0.5 text-sm text-ink-soft">{c.detail}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {c.phone && (
+                  <a href={`tel:${c.phone}`} className="btn-primary !min-h-[40px] !px-4 !py-2">
+                    <Phone className="h-4 w-4" /> โทร {c.phone}
+                  </a>
+                )}
+                {c.links?.map((l) => (
+                  <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="btn-soft !min-h-[40px] !px-4 !py-2">
+                    {l.label} <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                ))}
+              </div>
             </div>
-          );
-        })}
-      </div>
-      <div className="mt-6 rounded-2xl bg-gradient-to-r from-brand-50 to-amber-50 p-5 text-center">
-        <p className="font-semibold">ยื่นเรื่องหรือดำเนินการเรียบร้อยแล้ว?</p>
-        <button onClick={complete} className="btn-primary mt-3">
-          <Check className="h-4 w-4" /> ดำเนินการเรียบร้อยแล้ว
-        </button>
-      </div>
+          </li>
+        ))}
+      </ol>
+      <CompleteBox onClick={complete} />
       <Nav back={back} />
     </section>
   );
 }
 
-function Completed({ prog, p, reopen, restart }: { prog: RoadmapProgress; p: P; reopen: () => void; restart: () => void }) {
+function Completed({
+  rm,
+  prog,
+  reopen,
+  restart,
+}: {
+  rm?: RoadmapTemplate;
+  prog: RoadmapProgress;
+  reopen: () => void;
+  restart: () => void;
+}) {
   return (
     <section className="card overflow-hidden">
-      <div className="bg-gradient-to-r from-brand-100 via-brand-50 to-amber-50 p-6 text-center">
+      <div className="bg-petal p-6 text-center">
         <PartyPopper className="mx-auto h-10 w-10 text-brand-700" />
-        <h2 className="mt-2 text-xl font-bold">เก่งมาก! ทำครบทุกขั้นแล้ว</h2>
+        <h2 className="mt-2 text-xl font-bold">ทำครบทุกขั้นแล้ว</h2>
         <p className="mt-1 text-sm text-ink-soft">บันทึกไว้ในประวัติเมื่อ {prog.completedAt ? formatDate(prog.completedAt) : "-"}</p>
       </div>
       <div className="p-6">
-        <h3 className="font-semibold">สิ่งที่ควรทำระหว่างรอ</h3>
-        <ul className="mt-3 space-y-2">
-          {p.whileWaiting.map((w) => (
-            <li key={w} className="flex gap-2 text-ink-soft">
-              <Check className="mt-1 h-4 w-4 shrink-0 text-ok" /> {w}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-6 grid gap-3 text-sm sm:grid-cols-3">
-          <div className="rounded-xl bg-brand-50 p-3">ตรงกับอาการ {prog.symptoms.length} ข้อ</div>
-          <div className="rounded-xl bg-brand-50 p-3">หลักฐานพร้อม {prog.evidence.length}/{p.evidence.length} รายการ</div>
-          <div className="rounded-xl bg-brand-50 p-3">ติดต่อแล้ว {prog.contacted.length} หน่วยงาน</div>
-        </div>
+        {rm && (
+          <>
+            <h3 className="font-semibold">สิ่งที่ควรทำระหว่างรอ</h3>
+            <ol className="mt-3 space-y-2">
+              {rm.whileWaiting.map((w, i) => (
+                <li key={w} className="flex gap-3 text-ink-soft">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-tint text-xs font-bold text-brand-800">{i + 1}</span>
+                  {w}
+                </li>
+              ))}
+            </ol>
+          </>
+        )}
         <div className="mt-6 flex flex-wrap gap-2">
-          <Link href="/roadmap" className="btn-primary">ดูประวัติทั้งหมด</Link>
-          <button onClick={reopen} className="btn-soft">กลับไปแก้ขั้นที่ 4</button>
+          <Link href="/roadmap" className="btn-primary">
+            ดูประวัติทั้งหมด
+          </Link>
+          <button onClick={reopen} className="btn-soft">
+            กลับไปแก้ขั้นที่ 4
+          </button>
           <button
             onClick={() => {
               if (confirm("เริ่ม Roadmap นี้ใหม่ทั้งหมด? ความคืบหน้าเดิมจะหายไป")) restart();

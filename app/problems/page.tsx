@@ -10,7 +10,7 @@ import { createIndex } from "@/lib/search";
 const index = createIndex(PROBLEMS, (p) => ({
   title: p.title,
   keywords: p.keywords,
-  body: `${p.summary} ${p.symptoms.join(" ")}`,
+  body: `${p.summary} ${p.detail ?? ""} ${p.roadmap?.checklist.join(" ") ?? ""}`,
 }));
 
 export default function ProblemsPage() {

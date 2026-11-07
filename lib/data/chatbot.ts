@@ -42,8 +42,7 @@ export const CHAT_TREE: Record<string, ChatNode> = {
     text: "นายจ้างต้องจ่ายค่าจ้างตามกำหนดที่ตกลง อย่างน้อยเดือนละครั้ง ถ้าจ่ายช้าต้องเสียดอกเบี้ย และถ้าจงใจไม่จ่ายอาจต้องจ่ายเงินเพิ่มตามกฎหมาย ลูกจ้างยื่นคำร้องต่อพนักงานตรวจแรงงานได้ฟรีค่ะ\n\nแนะนำให้เริ่ม Roadmap เพื่อเช็คอายุความและเตรียมหลักฐาน",
     refs: ["พ.ร.บ.คุ้มครองแรงงาน พ.ศ. 2541"],
     options: [
-      { label: "เริ่ม Roadmap ค่าจ้างค้าง", href: "/roadmap/unpaid-wages" },
-      { label: "อ่านเรื่องค่าจ้างแบบละเอียด", href: "/knowledge/wages" },
+      { label: "เริ่ม Roadmap ค่าจ้างค้าง", href: "/roadmap/wage-shortfall" },
       { label: "← กลับ", next: "money" },
     ],
   },
@@ -51,7 +50,6 @@ export const CHAT_TREE: Record<string, ChatNode> = {
     text: "ค่าจ้างขั้นต่ำใช้กับลูกจ้างทุกคน รวมถึงนักเรียนนักศึกษาและช่วงทดลองงาน อัตราต่างกันตามจังหวัด ถ้าได้รายชั่วโมง ให้เทียบกับอัตรารายวันหาร 8 ค่ะ",
     options: [
       { label: "เริ่ม Roadmap ค่าแรงต่ำกว่าขั้นต่ำ", href: "/roadmap/below-minimum" },
-      { label: "อ่านเรื่องค่าจ้างขั้นต่ำ", href: "/knowledge/minimum-wage" },
       { label: "← กลับ", next: "money" },
     ],
   },
@@ -59,7 +57,6 @@ export const CHAT_TREE: Record<string, ChatNode> = {
     text: "นายจ้างหักค่าจ้างได้เฉพาะบางกรณี เช่น ภาษีหรือเงินสมทบประกันสังคม ส่วนการหักค่าปรับมาสายหรือค่าของเสียหายต้องมีความยินยอมเป็นหนังสือและมีเพดาน การเก็บเงินประกันทำได้เฉพาะงานบางประเภทเท่านั้นค่ะ",
     options: [
       { label: "เริ่ม Roadmap ถูกหักเงิน", href: "/roadmap/unfair-deduction" },
-      { label: "อ่านรายละเอียด", href: "/knowledge/deductions-deposit" },
       { label: "← กลับ", next: "money" },
     ],
   },
@@ -75,7 +72,7 @@ export const CHAT_TREE: Record<string, ChatNode> = {
   time_ot: {
     text: "OT ในวันทำงานต้องได้ไม่น้อยกว่า 1.5 เท่าของค่าจ้างรายชั่วโมง และ OT ในวันหยุดไม่น้อยกว่า 3 เท่า การตกลงว่า “ไม่มีค่า OT” ไม่ทำให้สิทธิหายไปค่ะ",
     options: [
-      { label: "เริ่ม Roadmap OT", href: "/roadmap/unpaid-ot" },
+      { label: "เริ่ม Roadmap OT", href: "/roadmap/overtime-holiday-pay" },
       { label: "อ่านเรื่อง OT", href: "/knowledge/overtime" },
       { label: "← กลับ", next: "time" },
     ],
@@ -83,7 +80,7 @@ export const CHAT_TREE: Record<string, ChatNode> = {
   time_holiday: {
     text: "ทำงานในวันหยุด ลูกจ้างรายวันหรือรายชั่วโมงต้องได้ไม่น้อยกว่า 2 เท่าของค่าจ้าง ลูกจ้างรายเดือนได้เพิ่มอีกไม่น้อยกว่า 1 เท่า และต้องมีวันหยุดประจำสัปดาห์อย่างน้อยสัปดาห์ละ 1 วันค่ะ",
     options: [
-      { label: "เริ่ม Roadmap ทำงานวันหยุด", href: "/roadmap/holiday-work" },
+      { label: "เริ่ม Roadmap ทำงานวันหยุด", href: "/roadmap/overtime-holiday-pay" },
       { label: "← กลับ", next: "time" },
     ],
   },
@@ -91,7 +88,6 @@ export const CHAT_TREE: Record<string, ChatNode> = {
     text: "ลูกจ้างอายุต่ำกว่า 18 ปี ห้ามทำงานระหว่าง 22.00–06.00 น. (เว้นแต่ได้รับอนุญาตบางกรณี) ห้ามทำ OT และห้ามทำงานในวันหยุดค่ะ ถ้าเจอแบบนี้ ลองคุยกับผู้ปกครองหรือผู้ใหญ่ที่ไว้ใจ แล้วแจ้งกรมสวัสดิการฯ ได้",
     options: [
       { label: "เริ่ม Roadmap ลูกจ้างเด็ก", href: "/roadmap/minor-overwork" },
-      { label: "อ่านเรื่องลูกจ้างเด็ก", href: "/knowledge/young-workers" },
       { label: "← กลับ", next: "time" },
     ],
   },
@@ -106,15 +102,14 @@ export const CHAT_TREE: Record<string, ChatNode> = {
   fired_notice: {
     text: "การจ้างที่ไม่มีกำหนดระยะเวลา นายจ้างต้องบอกล่วงหน้าอย่างน้อย 1 งวดการจ่ายค่าจ้าง ถ้าไม่บอก ต้องจ่ายค่าจ้างแทนการบอกกล่าวล่วงหน้าค่ะ",
     options: [
-      { label: "เริ่ม Roadmap ไล่ออกทันที", href: "/roadmap/fired-no-notice" },
+      { label: "เริ่ม Roadmap ไล่ออกทันที", href: "/roadmap/dismissal-severance" },
       { label: "← กลับ", next: "fired" },
     ],
   },
   fired_severance: {
     text: "ถ้าทำงานติดต่อกันครบ 120 วันขึ้นไปและถูกเลิกจ้างโดยไม่ได้ทำผิดร้ายแรง มีสิทธิได้ค่าชดเชยตามอายุงาน เริ่มที่ 30 วันของค่าจ้างอัตราสุดท้ายค่ะ",
     options: [
-      { label: "เริ่ม Roadmap ค่าชดเชย", href: "/roadmap/fired-no-severance" },
-      { label: "ดูตารางค่าชดเชย", href: "/knowledge/severance" },
+      { label: "เริ่ม Roadmap ค่าชดเชย", href: "/roadmap/dismissal-severance" },
       { label: "← กลับ", next: "fired" },
     ],
   },
@@ -123,7 +118,6 @@ export const CHAT_TREE: Record<string, ChatNode> = {
     options: [
       { label: "ใช่ มีกะ/เวลาเข้างาน", next: "status_employee" },
       { label: "ไม่ใช่ รับงานเป็นชิ้น ทำเมื่อไหร่ก็ได้", next: "status_freelance" },
-      { label: "ไม่แน่ใจ", href: "/knowledge/am-i-employee" },
     ],
   },
   status_employee: {

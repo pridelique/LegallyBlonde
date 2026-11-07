@@ -166,14 +166,12 @@ export const FORMS: Record<FormType, FormSchema> = {
 };
 
 export const CLAIM_BY_PROBLEM: Record<string, string[]> = {
-  "unpaid-wages": ["ค่าจ้าง"],
+  "wage-shortfall": ["ค่าจ้าง", "เงินที่ถูกหัก / เงินประกัน"],
+  "overtime-holiday-pay": ["ค่าล่วงเวลา", "ค่าทำงานในวันหยุด"],
+  "holiday-leave-rights": ["ค่าจ้าง"],
+  "dismissal-severance": ["ค่าชดเชย", "ค่าจ้างแทนการบอกกล่าวล่วงหน้า"],
   "below-minimum": ["ค่าจ้าง"],
-  "unpaid-ot": ["ค่าล่วงเวลา"],
-  "holiday-work": ["ค่าทำงานในวันหยุด"],
   "unfair-deduction": ["เงินที่ถูกหัก / เงินประกัน"],
-  "fired-no-severance": ["ค่าชดเชย"],
-  "fired-no-notice": ["ค่าจ้างแทนการบอกกล่าวล่วงหน้า"],
-  "leave-denied": ["ค่าจ้าง"],
   "minor-overwork": ["ค่าล่วงเวลา", "ค่าทำงานในวันหยุด"],
   "no-social-security": ["อื่น ๆ"],
 };

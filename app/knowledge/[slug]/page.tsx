@@ -53,10 +53,10 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
           {/* คำอธิบายแบบยาว */}
           <section className="card prose-legal p-6">
             <h2 className="text-lg font-bold">In detail</h2>
-            {t.long.map((l) => (
-              <div key={l.heading}>
-                <h3>{l.heading}</h3>
-                <p className="text-ink-soft">{l.body}</p>
+            {t.long.map((l, i) => (
+              <div key={i}>
+                {l.heading && <h3>{l.heading}</h3>}
+                {l.body && <p className="whitespace-pre-line text-ink-soft">{l.body}</p>}
               </div>
             ))}
           </section>

@@ -6,6 +6,7 @@ import {
   CalendarDays,
   Sprout,
   ShieldPlus,
+  HardHat,
   Laptop,
   ChevronRight,
   Phone,
@@ -21,7 +22,15 @@ import Workspace from "@/components/home/Workspace";
 import KnowledgeSwitcher from "@/components/home/KnowledgeSwitcher";
 import { CardHead } from "@/components/ui";
 import { PROBLEMS } from "@/lib/data/problems";
-import { CONTACTS } from "@/lib/data/contacts";
+import { HOME_HOTLINES, getContact } from "@/lib/data/contacts";
+
+const ID_ICON: Record<string, LucideIcon> = {
+  "wage-shortfall": Wallet,
+  "overtime-holiday-pay": Clock,
+  "holiday-leave-rights": CalendarDays,
+  "dismissal-severance": UserX,
+  "unsafe-workplace": HardHat,
+};
 
 const GROUP_ICON: Record<string, LucideIcon> = {
   ค่าจ้าง: Wallet,
@@ -35,7 +44,7 @@ const GROUP_ICON: Record<string, LucideIcon> = {
 
 export default function Home() {
   const problems = PROBLEMS.slice(0, 6);
-  const hotlines = CONTACTS.filter((c) => c.sector === "ministry");
+  const hotlines = HOME_HOTLINES.map(getContact).filter((c): c is NonNullable<typeof c> => !!c?.hotline);
 
   return (
     <>
@@ -77,7 +86,7 @@ export default function Home() {
               {problems.map((p) => (
                 <li key={p.id}>
                   <Link href={`/problems/${p.id}`} className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 transition hover:shadow-soft">
-                    <IconCircle icon={GROUP_ICON[p.group] || Wallet} tone="tint" size="sm" />
+                    <IconCircle icon={ID_ICON[p.id] || GROUP_ICON[p.group] || Wallet} tone="tint" size="sm" />
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm font-medium">{p.title}</span>
                       <span className="block text-xs text-ink-soft">{p.group}</span>
@@ -92,43 +101,30 @@ export default function Home() {
 
         <div className="space-y-6 lg:col-span-5">
           <KnowledgeSwitcher />
-            <section className="card-petal p-5 sm:p-6" aria-labelledby="hl-title">
-              <div className="flex items-center justify-between gap-3">
-                <h2 id="hl-title" className="text-lg font-bold">Hotlines</h2>
-                <Link href="/contacts" className="text-sm font-semibold text-brand-800 hover:underline">
-                  All contacts
-                </Link>
-              </div>
-              <ul className="mt-4 grid grid-cols-3 gap-3">
-                {hotlines.map((c) => {
-                  const isLine = c.id === "dlpw" && !!c.line;
-                  const value = isLine ? `@${c.line!.replace(/^@/, "")}` : c.phone || c.line || "–";
-                  const label = isLine ? "LINE กรมสวัสดิการฯ" : c.name;
-                  const inner = (
-                    <>
-                      <IconCircle icon={isLine ? MessageCircle : Phone} tone="tint" size="sm" />
-                      <span>
-                        <span className={`block font-bold tabular-nums ${isLine ? "text-sm sm:text-base" : "text-xl"}`}>{value}</span>
-                        <span className="block text-[11px] leading-tight text-ink-soft sm:text-xs">{label}</span>
+          <section className="card-petal p-5 sm:p-6" aria-labelledby="hl-title">
+            <div className="flex items-center justify-between gap-3">
+              <h2 id="hl-title" className="text-lg font-bold">Hotlines</h2>
+              <Link href="/contacts" className="text-sm font-semibold text-brand-800 hover:underline">
+                All contacts
+              </Link>
+            </div>
+            <ul className="mt-4 grid grid-cols-3 gap-3">
+              {hotlines.map((c) => (
+                <li key={c.id}>
+                  <a href={`tel:${c.hotline!.number}`} className="flex h-full flex-col gap-3 rounded-2xl bg-white/80 p-3.5 transition hover:bg-white sm:p-4">
+                    <IconCircle icon={Phone} tone="tint" size="sm" />
+                    <span>
+                      <span className="flex items-baseline gap-1">
+                        <span className="text-xl font-bold tabular-nums">{c.hotline!.number}</span>
+                        {c.hotline!.ext && <span className="text-xs font-semibold text-brand-800">{c.hotline!.ext}</span>}
                       </span>
-                    </>
-                  );
-                  return (
-                    <li key={c.id}>
-                      {c.phone && !isLine ? (
-                        <a href={`tel:${c.phone}`} className="flex h-full flex-col gap-3 rounded-2xl bg-white/80 p-3.5 transition hover:bg-white sm:p-4">
-                          {inner}
-                        </a>
-                      ) : (
-                        <Link href="/contacts" className="flex h-full flex-col gap-3 rounded-2xl bg-white/80 p-3.5 transition hover:bg-white sm:p-4">
-                          {inner}
-                        </Link>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
+                      <span className="block text-[11px] leading-tight text-ink-soft sm:text-xs">{c.name}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
 
           <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-800 to-brand-700 p-6 text-white shadow-pop" aria-labelledby="ask-title">
             <span aria-hidden="true" className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full bg-white/10" />
