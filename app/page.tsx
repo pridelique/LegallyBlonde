@@ -52,13 +52,13 @@ export default function Home() {
         <Blob id="hero-blob" className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 opacity-60" />
         <Orb id="hero-orb" size={240} className="pointer-events-none absolute -right-12 top-4 hidden opacity-70 md:block" />
         <Arch id="hero-arch" size={110} className="pointer-events-none absolute bottom-0 right-[30%] hidden opacity-60 md:block" />
-        <div className="container-page relative mt-12 sm:mt-20">
+        <div className="container-page relative mt-12 sm:mt-24">
           <h1 className="mt-4 max-w-2xl text-4xl font-bold leading-tight sm:text-6xl">
             รู้สิทธิ เตรียมหลักฐาน
             <br />
             <span className="bg-gradient-to-r from-brand-700 to-brand-500 bg-clip-text text-transparent">สู่การทำงานที่เป็นธรรม</span>
           </h1>
-          <p className="mt-4 max-w-xl sm:text-lg text-ink-soft">
+          <p className="mt-4 sm:mt-8 max-w-xl text-[15px] sm:text-lg text-ink-soft">
             Understand your rights at work in plain language, then prepare step by step until you’re ready to contact the right agency — anonymously.</p>
           <div className="mt-2 sm:mt-6 max-w-2xl">
             <SearchBox big />

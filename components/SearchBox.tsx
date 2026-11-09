@@ -47,8 +47,12 @@ export default function SearchBox({ big = false }: { big?: boolean }) {
       {big && (
         <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
           <span className="text-ink-soft">Popular:</span>
-          {SUGGESTIONS.map((s) => (
-            <button key={s} onClick={() => go(s)} className="rounded-full bg-white/70 px-3 py-1.5 text-ink-soft transition hover:bg-white hover:text-brand-800">
+          {SUGGESTIONS.map((s, i) => (
+            <button
+              key={s}
+              onClick={() => go(s)}
+              className={`rounded-full bg-white/70 px-3 py-1.5 text-ink-soft transition hover:bg-white hover:text-brand-800 ${i >= 3 ? "hidden md:inline-block" : ""}`}
+            >
               {s}
             </button>
           ))}
